@@ -38,6 +38,7 @@ namespace Grafo
                         else vertices = int.Parse(entry[i].ToString());
                     }
                 }
+
                 // initialize matrix
                 matrix = new int[vertices][];
                 for (var i = 0; i < vertices; i++)
@@ -46,6 +47,7 @@ namespace Grafo
                     for (int j = 0; j < vertices; j++)
                         matrix[i][j] = 0;
                 }
+
                 // create connections
                 for (var i = 0; i < entry.Length; i++)
                 {
@@ -70,6 +72,7 @@ namespace Grafo
                         n = -1;
                     }
                 }
+
                 // print matrix
                 Console.WriteLine("\nMatriz de adjacência:");
                 Console.Write("   ");
@@ -83,9 +86,9 @@ namespace Grafo
                         Console.Write("[" + matrix[i][j] + "]");
                     Console.WriteLine();
                 }
+
                 // print vector
                 Console.WriteLine("\nVetor de adjacência:");
-                //Console.WriteLine("   1  2  3  4");
                 for (var i = 0; i < vertices; i++)
                 {
                     Console.Write(i + 1 + " [ ] -> ");
