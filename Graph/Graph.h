@@ -119,9 +119,10 @@ public:
 	std::vector<std::vector<std::string>> getVector() {
 		auto adjVector = std::vector<std::vector<std::string>>();
 		for (auto v : vertices) {
-			//adjVector.push_back();
+			adjVector.push_back(std::vector<std::string>());
+			adjVector[adjVector.size() - 1].insert(adjVector[adjVector.size() - 1].begin(), "([ " + v->id + " ])");
 			for (auto a : v->adjacencies) {
-
+				adjVector[adjVector.size() - 1].insert(adjVector[adjVector.size() - 1].begin(), " -> [ " + a->id + " ]");
 			}
 		}
 	}

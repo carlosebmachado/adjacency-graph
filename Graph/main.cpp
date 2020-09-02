@@ -1,5 +1,5 @@
 #include <iostream>
-#include "packages/BPS/BPS.h"
+#include "BPS/BPS.h"
 #include "Graph.h"
 
 int main(void) {
