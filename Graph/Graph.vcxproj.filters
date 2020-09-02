@@ -16,13 +16,16 @@
     <Filter Include="Arquivos de Cabeçalho\graphics">
       <UniqueIdentifier>{a529cff6-2c04-4a16-bc1c-44f79f1f07e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Cabeçalho\parser">
-      <UniqueIdentifier>{e74a7bbd-c4a2-4e4e-b3d8-27343a218d47}</UniqueIdentifier>
+    <Filter Include="Arquivos de Cabeçalho\BPS">
+      <UniqueIdentifier>{9e0fbd2b-4f29-4e38-a61d-df60c4595416}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="BPS.cpp">
+      <Filter>Arquivos de Cabeçalho\BPS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -43,11 +46,14 @@
     <ClInclude Include="util.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="commands.h">
-      <Filter>Arquivos de Cabeçalho\parser</Filter>
+    <ClInclude Include="cmd.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="io.h">
-      <Filter>Arquivos de Cabeçalho\parser</Filter>
+    <ClInclude Include="test.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="BPS.h">
+      <Filter>Arquivos de Cabeçalho\BPS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

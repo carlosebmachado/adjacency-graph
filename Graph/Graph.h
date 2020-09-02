@@ -3,7 +3,17 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "util.h"
+
+
+int** createMatrixZeros(size_t rows, size_t cols) {
+	int** matrix = new int* [rows];
+	for (auto i = 0; i < rows; i++) {
+		matrix[i] = new int[cols];
+		for (auto j = 0; j < cols; j++)
+			matrix[i][j] = 0;
+	}
+	return matrix;
+}
 
 class Vertex {
 public:
@@ -120,24 +130,25 @@ public:
 		auto adjVector = std::vector<std::vector<std::string>>();
 		for (auto v : vertices) {
 			adjVector.push_back(std::vector<std::string>());
-			adjVector[adjVector.size() - 1].insert(adjVector[adjVector.size() - 1].begin(), "([ " + v->id + " ])");
+			adjVector[adjVector.size() - 1].push_back("([ " + v->id + " ])");
 			for (auto a : v->adjacencies) {
-				adjVector[adjVector.size() - 1].insert(adjVector[adjVector.size() - 1].begin(), " -> [ " + a->id + " ]");
+				adjVector[adjVector.size() - 1].push_back(" -> [ " + a->id + " ]");
 			}
 		}
+		return adjVector;
 	}
 
 	int** getMatrix() {
-		//int** matrix = fillMatrix(vertices.size());
-		int** matrix = fillMatrix(10);
-
-		for (auto i = 0; i < 10; i++) {
-			for (auto j = 0; j < 10; j++) {
-				std::cout << matrix[i][j] << " ";
+		auto matrix = createMatrixZeros(vertices.size(), vertices.size());
+		for (auto i = 0; i < vertices.size(); i++) {
+			for (auto j = 0; j < vertices.size(); j++) {
+				for (auto vi = 0; vi < vertices[i]->adjacencies.size(); vi++) {
+					if (vertices[i]->adjacencies[vi]->id._Equal(vertices[j]->id)) {
+						matrix[i][j] = 1;
+					}
+				}
 			}
-			std::cout << "\n";
 		}
-
 		return matrix;
 	}
 };

@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BPS.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,10 +149,11 @@
     <Text Include="trabalho1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="commands.h" />
+    <ClInclude Include="BPS.h" />
+    <ClInclude Include="cmd.h" />
     <ClInclude Include="Graph.h" />
-    <ClInclude Include="io.h" />
     <ClInclude Include="plot.h" />
+    <ClInclude Include="test.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
