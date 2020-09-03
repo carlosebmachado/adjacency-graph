@@ -7,6 +7,7 @@
 ## add graph {name} // Add a new graph
 ## rem graph {name} // Remove a graph
 ## sel graph {name} // Select a graph and move the application to Graph level
+## exit // Exists of application
 
 # Graph level
 ## add vertex {id} [o]{x} [o]{y} // Add a new vertex
@@ -15,3 +16,4 @@
 ## rem edge {id1} {id2} // Remove a edge
 ## bfs // Make a breadth-first search (busca em largura)
 ## dfs // Make a depth-first search (busca em profundidade)
+## back // Exits of current graph
