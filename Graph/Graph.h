@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include <stack>
 
 int** createMatrixZeros(size_t rows, size_t cols) {
 	int** matrix = new int* [rows];
@@ -122,9 +122,37 @@ public:
 		return false;
 	}
 
+	// 
+	Vertex* getVertex(std::string id) {
+		for (auto i = 0; i < vertices.size(); i++) {
+			if (vertices[i]->id._Equal(id)) {
+				return vertices[i];
+			}
+		}
+		return nullptr;
+	}
+
+	Vertex* getVertex(int index) {
+		return vertices[index];
+	}
+
+	// 
+	int indexOfVertex(std::string id) {
+		for (auto i = 0; i < vertices.size(); i++) {
+			if (vertices[i]->id._Equal(id)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	int getDegreeOutput(std::string id) { return 0; }
 	int getDegreeInput(std::string id) { return 0; }
-	bool isNeighborhood(std::string id1, std::string id2) { return true; }
+
+	bool isNeighborhood(std::string id1, std::string id2) { 
+		
+		return true;
+	}
 
 	std::vector<std::vector<std::string>> getVector() {
 		auto adjVector = std::vector<std::vector<std::string>>();
@@ -150,5 +178,70 @@ public:
 			}
 		}
 		return matrix;
+	}
+
+	void DFS(Vertex* vertex) {
+		std::stack<Vertex*> pilha;
+		int vector_size = vertices.size();
+		bool* visitados = new bool[vector_size];
+
+		for (int i = 0; i < vector_size; i++) 
+			visitados[i] = false;
+
+		while (true) {
+			// Verifica se o vertice atual já foi visitado
+			if (!visitados[indexOfVertex(vertex->id)]) {
+				std::cout << "Visitando vertice " << vertex->id << std::endl;
+				visitados[indexOfVertex(vertex->id)] = true;
+				pilha.push(vertex);
+			}
+
+			bool find = false;
+			Vertex* newV = nullptr;
+
+			for(auto i = 0; i < getVertex(vertex->id)->adjacencies.size(); i++){
+				for (auto j = 0; j < vector_size; j++) {
+
+					/* 
+					   Procura na lista de adjacencias do vertice atual o vertice correspodente
+					   "i" = posição atual na lista de adjacencias 
+					   "j" = posição atual na lista de vertices 
+					*/
+					if(getVertex(vertex->id)->adjacencies[i]->id._Equal(vertices[j]->id))
+					{
+						if (!visitados[j]) {
+							newV = vertices[j];
+							find = true;
+							break;
+						}
+					}
+
+				}
+				if (find)
+					break;
+			}
+
+			if (find)
+				vertex = newV; // Atualiza o vertex para o vertice adjacente
+			else {
+				// Remove da pilha e verifica se esta vazia
+				pilha.pop();		
+
+				if (pilha.empty()) {
+					bool emptyVector = true;
+
+					for (auto j = 0; j < vector_size; j++) {
+						if (!visitados[j]) {
+							pilha.push(getVertex(j));
+							emptyVector = false;
+						}
+					}
+
+					if(emptyVector)
+						break;
+				}
+				vertex = pilha.top();
+			}
+		}
 	}
 };

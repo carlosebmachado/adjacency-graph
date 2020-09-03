@@ -14,6 +14,7 @@ std::vector<Graph> readGraphData() {
         Graph graph = Graph(section->find("name")->getValue());
         auto lstrv = BPS::split(section->find("vertices")->getValue(), ',');
         auto lstre = BPS::split(section->find("edges")->getValue(), '|');
+        
         for (auto v : lstrv) {
             graph.addVertex(new Vertex(v));
         }
