@@ -230,10 +230,12 @@ public:
 				if (pilha.empty()) {
 					bool emptyVector = true;
 
+					// Devido a pilha estar vazia, irá procurar um novo vertice que ainda não foi visitado
 					for (auto j = 0; j < vector_size; j++) {
 						if (!visitados[j]) {
 							pilha.push(getVertex(j));
 							emptyVector = false;
+							break;
 						}
 					}
 
