@@ -17,3 +17,15 @@
 	vertices:a,b,c,d,e,f,g,h,i
 	edges:a,e|a,f|e,i|i,a|f,e|f,i|b,g|g,a|c,h|h,d
 >
+
+<graph4
+	name:test4
+	vertices:a,b,c,d,e,f
+	edges:a,b|a,c|b,a|b,d|b,c|d,b|d,f|d,e|f,d|f,e|e,f|e,d|e,c|c,e|c,b|c,a
+>
+
+<graph3
+	name:test5
+	vertices:a,e,i,f,g,b,c,h,d
+	edges:a,e|a,i|a,f|a,g|e,a|e,i|e,f|i,e|i,a|i,f|f,i|f,e|f,a|g,a|g,b|b,g|c,h|h,c|h,d|d,h
+>

@@ -10,7 +10,8 @@ int main(void) {
 	graphs = readGraphData();
 
 	loadPrintTest(graphs);
-	graphs[2].DFS(graphs[2].getVertex("a"));
+	graphs[4].BFS(graphs[4].getVertex("a"));
+
 	//testGraph();
 
 	return EXIT_SUCCESS;

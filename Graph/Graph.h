@@ -195,11 +195,12 @@ public:
 				visitados[indexOfVertex(vertex->id)] = true;
 				pilha.push(vertex);
 			}
-
-			bool find = false;
+			
+			Vertex* newI = getVertex(vertex->id);
 			Vertex* newV = nullptr;
+			bool find = false;
 
-			for(auto i = 0; i < getVertex(vertex->id)->adjacencies.size(); i++){
+			for(auto i = 0; i < newI->adjacencies.size(); i++){
 				for (auto j = 0; j < vector_size; j++) {
 
 					/* 
@@ -207,7 +208,7 @@ public:
 					   "i" = posição atual na lista de adjacencias 
 					   "j" = posição atual na lista de vertices 
 					*/
-					if(getVertex(vertex->id)->adjacencies[i]->id._Equal(vertices[j]->id))
+					if(newI->adjacencies[i]->id._Equal(vertices[j]->id))
 					{
 						if (!visitados[j]) {
 							newV = vertices[j];
@@ -244,6 +245,91 @@ public:
 				}
 				vertex = pilha.top();
 			}
+		}
+	}
+
+	void visiting(bool* &visited, Vertex* vertex) {
+		std::cout << "Visitando vertice " << vertex->id << std::endl;
+		visited[indexOfVertex(vertex->id)] = true;
+	}
+
+	void visiting(bool*& visited, std::vector<Vertex*> &queue, Vertex* vertex) {
+		std::cout << "Visitando vertice " << vertex->id << std::endl;
+		visited[indexOfVertex(vertex->id)] = true;
+		queue.push_back(vertex);
+	}
+
+	void BFS(Vertex* vertex) {
+		std::vector<Vertex*> queue;
+		int vector_size = vertices.size();
+		bool* visitados = new bool[vector_size];
+
+		for (int i = 0; i < vector_size; i++)
+			visitados[i] = false;
+
+		/*std::cout << "Visitando vertice " << vertex->id << std::endl;
+		visitados[indexOfVertex(vertex->id)] = true;*/
+		// Marca o vertex inicial como visitado
+		visiting(visitados, vertex);
+
+		while (true) {
+			Vertex* newV = nullptr;
+			Vertex* newI = getVertex(vertex->id);
+			bool find = false;
+
+			for (auto i = 0; i < newI->adjacencies.size(); i++) {
+				for (auto j = 0; j < vector_size; j++) {
+
+					if (newI->adjacencies[i]->id._Equal(vertices[j]->id))
+					{
+						if (!visitados[j]) {
+							/*std::cout << "Visitando vertice " << vertices[j]->id << std::endl;
+							visitados[indexOfVertex(vertices[j]->id)] = true;
+							queue.push_back(vertices[j]);*/
+							/*
+								Marca o vertice atual da lista de ajcacencia como visitado
+								Realizando atualização de queue e vetor de visitados
+							*/
+							visiting(visitados, queue, vertices[j]);							
+							find = true;
+							break;
+						}
+					}
+
+				}
+				if (find)
+					break;
+			}
+
+			// Verifica se a queue esta vazia, para atualizar a nova posição
+			if (!queue.empty()) {
+				vertex = queue.front();
+				queue.pop_back();
+			}
+			else {
+				bool emptyVector = true;
+
+				// Devido a queue estar vazia, irá procurar um novo vertice que ainda não foi visitado
+				for (auto j = 0; j < vector_size; j++) {
+					if (!visitados[j]) {
+						/*
+							Reinicia a queue para um novo vertice
+							Necessário marcar as flags e adicionar/removoer da queue
+						*/
+						queue.push_back(getVertex(j));
+						emptyVector = false;
+
+						vertex = queue.front();
+						queue.pop_back();
+
+						visiting(visitados, vertex);
+						break;
+					}
+				}
+
+				if (emptyVector)
+					break;
+			}				
 		}
 	}
 };
