@@ -16,4 +16,5 @@
 ## rem edge {id1} {id2} // Remove a edge
 ## bfs // Make a breadth-first search (busca em largura)
 ## dfs // Make a depth-first search (busca em profundidade)
+## plot // Draw the graph on a graphic window
 ## back // Exits of current graph

@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "BPS.h"
-#include "Graph.h"
+#include "graph.h"
 
 std::vector<Graph> readGraphData() {
     auto graphs = std::vector<Graph>();
@@ -12,11 +12,19 @@ std::vector<Graph> readGraphData() {
 
     for (auto section : file->findAll()) {
         Graph graph = Graph(section->find("name")->getValue());
+        bool isXY = section->exists("xy");
         auto lstrv = BPS::split(section->find("vertices")->getValue(), ',');
         auto lstre = BPS::split(section->find("edges")->getValue(), '|');
+        std::vector<std::string> lstrxy;
+        if (isXY) lstrxy = BPS::split(section->find("xy")->getValue(), '|');
         
-        for (auto v : lstrv) {
-            graph.addVertex(new Vertex(v));
+        for (int i = 0; i < lstrv.size(); i++) {
+            if (isXY) {
+                auto xy = BPS::split(lstrxy[i], ',');
+                graph.addVertex(new Vertex(atoi(xy[0].c_str()), atoi(xy[1].c_str()), lstrv[i]));
+            } else {
+                graph.addVertex(new Vertex(lstrv[i]));
+            }
         }
         for (auto e : lstre) {
             auto p1p2 = BPS::split(e, ',');

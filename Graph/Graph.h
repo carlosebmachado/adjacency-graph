@@ -208,8 +208,7 @@ public:
 					   "i" = posição atual na lista de adjacencias 
 					   "j" = posição atual na lista de vertices 
 					*/
-					if(newI->adjacencies[i]->id._Equal(vertices[j]->id))
-					{
+					if(newI->adjacencies[i]->id._Equal(vertices[j]->id)) {
 						if (!visitados[j]) {
 							newV = vertices[j];
 							find = true;
@@ -218,8 +217,7 @@ public:
 					}
 
 				}
-				if (find)
-					break;
+				if (find) break;
 			}
 
 			if (find)
@@ -239,9 +237,7 @@ public:
 							break;
 						}
 					}
-
-					if(emptyVector)
-						break;
+					if(emptyVector) break;
 				}
 				vertex = pilha.top();
 			}
@@ -260,6 +256,7 @@ public:
 	}
 
 	void BFS(Vertex* vertex) {
+
 		std::vector<Vertex*> queue;
 		int vector_size = vertices.size();
 		bool* visitados = new bool[vector_size];
@@ -273,6 +270,7 @@ public:
 		visiting(visitados, vertex);
 
 		while (true) {
+
 			Vertex* newV = nullptr;
 			Vertex* newI = getVertex(vertex->id);
 			bool find = false;
@@ -280,8 +278,7 @@ public:
 			for (auto i = 0; i < newI->adjacencies.size(); i++) {
 				for (auto j = 0; j < vector_size; j++) {
 
-					if (newI->adjacencies[i]->id._Equal(vertices[j]->id))
-					{
+					if (newI->adjacencies[i]->id._Equal(vertices[j]->id)) {
 						if (!visitados[j]) {
 							/*std::cout << "Visitando vertice " << vertices[j]->id << std::endl;
 							visitados[indexOfVertex(vertices[j]->id)] = true;
@@ -290,25 +287,21 @@ public:
 								Marca o vertice atual da lista de ajcacencia como visitado
 								Realizando atualização de queue e vetor de visitados
 							*/
-							visiting(visitados, queue, vertices[j]);							
+							visiting(visitados, queue, vertices[j]);
 							find = true;
 							break;
 						}
 					}
-
 				}
-				if (find)
-					break;
+				if (find) break;
 			}
 
 			// Verifica se a queue esta vazia, para atualizar a nova posição
 			if (!queue.empty()) {
 				vertex = queue.front();
 				queue.pop_back();
-			}
-			else {
+			} else {
 				bool emptyVector = true;
-
 				// Devido a queue estar vazia, irá procurar um novo vertice que ainda não foi visitado
 				for (auto j = 0; j < vector_size; j++) {
 					if (!visitados[j]) {
@@ -326,10 +319,8 @@ public:
 						break;
 					}
 				}
-
-				if (emptyVector)
-					break;
-			}				
+				if (emptyVector) break;
+			}
 		}
 	}
 };

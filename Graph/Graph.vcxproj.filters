@@ -40,9 +40,6 @@
     <ClInclude Include="plot.h">
       <Filter>Arquivos de Cabeçalho\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Graph.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="util.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -54,6 +51,9 @@
     </ClInclude>
     <ClInclude Include="BPS.h">
       <Filter>Arquivos de Cabeçalho\BPS</Filter>
+    </ClInclude>
+    <ClInclude Include="graph.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
