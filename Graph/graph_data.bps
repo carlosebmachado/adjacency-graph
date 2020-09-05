@@ -31,13 +31,21 @@
 >
 
 <graph6
-	name:test6	
+	name:Graphic test
+	vertices:1,2,3,4
+	xy:400,50|450,225|400,400|350,225
+	edges:1,2|1,3|2,3|2,4|3,4
+>
+>
+
+<graph7
+	name:test7	
 	vertices:a,b,c,d,e,f
 	edges:a,c|b,a|b,d|c,b|d,f|e,d|e,c|f,e
 >
 
-<graph7
-	name:test7
+<graph8
+	name:test8
 	vertices:a,b,c,d,e,f,g,h,i
 	edges:a,e|a,i|a,f|a,g|b,g|c,h|d,h|e,a|e,f|e,i|f,a|f,e|f,i|g,a|g,b|h,c|h,d|i,e|i,a|i,f
 >
