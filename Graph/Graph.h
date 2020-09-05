@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include <stack>
+#include <list> 
+#include <queue> // fila para usar na BFS
 
 int** createMatrixZeros(size_t rows, size_t cols) {
 	int** matrix = new int* [rows];
@@ -180,20 +182,50 @@ public:
 		return matrix;
 	}
 
+	// Verifica se os vertice v1 é vizinho de v2, respeitando as direçõeos
+	bool neighbourhood(Vertex* v1, Vertex* v2) {
+		for (int i = 0; i < v1->adjacencies.size(); i++)
+			if (v1->adjacencies[i]->id == v2->id)
+				return true;
+		return false;
+	}
+
+	// Realiza a marcação do vertice como visitado
+	void visiting(bool*& visited, Vertex* vertex) {
+		std::cout << "Visitando vertice " << vertex->id << std::endl;
+		visited[indexOfVertex(vertex->id)] = true;
+	}
+
+	// Realiza a marcaçãoo do vertice como visitado e adiciona a lista
+	void visiting(bool*& visited, std::list<Vertex*>& queue, Vertex* vertex) {
+		std::cout << "Visitando vertice " << vertex->id << std::endl;
+		visited[indexOfVertex(vertex->id)] = true;
+		queue.push_back(vertex);
+	}
+
+	// Realiza a marcação do vertice como visitado e adiciona a pilha
+	void visiting(bool*& visited, std::stack<Vertex*>& stack, Vertex*& vertex, Vertex* oldvertex) {
+		stack.push(oldvertex);
+		vertex = stack.top();
+		std::cout << "Visitando vertice " << vertex->id << std::endl;
+		visited[indexOfVertex(vertex->id)] = true;
+	}
+
+	// DFS baseado na ordem de entrada 
 	void DFS(Vertex* vertex) {
-		std::stack<Vertex*> pilha;
+		std::stack<Vertex*> stack;
 		int vector_size = vertices.size();
-		bool* visitados = new bool[vector_size];
+		bool* visited = new bool[vector_size];
 
 		for (int i = 0; i < vector_size; i++) 
-			visitados[i] = false;
+			visited[i] = false;
 
 		while (true) {
 			// Verifica se o vertice atual já foi visitado
-			if (!visitados[indexOfVertex(vertex->id)]) {
+			if (!visited[indexOfVertex(vertex->id)]) {
 				std::cout << "Visitando vertice " << vertex->id << std::endl;
-				visitados[indexOfVertex(vertex->id)] = true;
-				pilha.push(vertex);
+				visited[indexOfVertex(vertex->id)] = true;
+				stack.push(vertex);
 			}
 			
 			Vertex* newI = getVertex(vertex->id);
@@ -202,21 +234,18 @@ public:
 
 			for(auto i = 0; i < newI->adjacencies.size(); i++){
 				for (auto j = 0; j < vector_size; j++) {
-
 					/* 
 					   Procura na lista de adjacencias do vertice atual o vertice correspodente
 					   "i" = posição atual na lista de adjacencias 
 					   "j" = posição atual na lista de vertices 
 					*/
-					if(newI->adjacencies[i]->id._Equal(vertices[j]->id))
-					{
-						if (!visitados[j]) {
+					if(newI->adjacencies[i]->id._Equal(vertices[j]->id)) {
+						if (!visited[j]) {
 							newV = vertices[j];
 							find = true;
 							break;
 						}
 					}
-
 				}
 				if (find)
 					break;
@@ -226,15 +255,15 @@ public:
 				vertex = newV; // Atualiza o vertex para o vertice adjacente
 			else {
 				// Remove da pilha e verifica se esta vazia
-				pilha.pop();		
+				stack.pop();		
 
-				if (pilha.empty()) {
+				if (stack.empty()) {
 					bool emptyVector = true;
 
 					// Devido a pilha estar vazia, irá procurar um novo vertice que ainda não foi visitado
 					for (auto j = 0; j < vector_size; j++) {
-						if (!visitados[j]) {
-							pilha.push(getVertex(j));
+						if (!visited[j]) {
+							stack.push(getVertex(j));
 							emptyVector = false;
 							break;
 						}
@@ -243,39 +272,81 @@ public:
 					if(emptyVector)
 						break;
 				}
-				vertex = pilha.top();
+				vertex = stack.top();
 			}
 		}
 	}
 
-	void visiting(bool* &visited, Vertex* vertex) {
-		std::cout << "Visitando vertice " << vertex->id << std::endl;
-		visited[indexOfVertex(vertex->id)] = true;
+	// DFS baseada na Matrix
+	void DFSMatrix(Vertex* vertex) {
+		int** matrix = getMatrix();
+		std::stack<Vertex*> stack;
+		int vector_size = vertices.size();
+		bool* visited = new bool[vector_size];
+
+		for (int i = 0; i < vector_size; i++)
+			visited[i] = false;
+
+		// Realiza a marcação do primeiro vertice como visitado
+		visiting(visited, stack, vertex, vertex);
+
+		while (true) {
+			bool find = false;
+
+			for (auto i = 0; i < vector_size; i++) {
+				if (indexOfVertex(vertex->id) == i) { // Compara indice do vertice com a linha da matrix
+					for (auto j = 0; j < vector_size; j++) {
+						if (matrix[i][j] == 1 && !visited[j]) {
+							// Visita o vertice e adiciona a pilha
+							visiting(visited, stack, vertex, vertices[j]);
+							break;
+						}
+					}
+				}
+				if (find)
+					break;
+			}
+
+			if (!find) {
+				stack.pop();
+
+				if (stack.empty()) {
+					bool emptyVector = true;
+
+					// Devido a pilha estar vazia, irá procurar um novo vertice que ainda não foi visitado
+					for (auto j = 0; j < vector_size; j++) {
+						if (!visited[j]) {
+							visiting(visited, stack, vertex, getVertex(j));	
+							emptyVector = false;
+							break;
+						}
+					}
+
+					if (emptyVector)
+						break;
+				}
+				else 
+					vertex = stack.top();
+			
+			}
+		}	
 	}
 
-	void visiting(bool*& visited, std::vector<Vertex*> &queue, Vertex* vertex) {
-		std::cout << "Visitando vertice " << vertex->id << std::endl;
-		visited[indexOfVertex(vertex->id)] = true;
-		queue.push_back(vertex);
-	}
-
+	// BFS baseadp na ordem de entrada
 	void BFS(Vertex* vertex) {
-		std::vector<Vertex*> queue;
+		std::list<Vertex*> queue;
 		int vector_size = vertices.size();
 		bool* visitados = new bool[vector_size];
 
 		for (int i = 0; i < vector_size; i++)
 			visitados[i] = false;
 
-		/*std::cout << "Visitando vertice " << vertex->id << std::endl;
-		visitados[indexOfVertex(vertex->id)] = true;*/
 		// Marca o vertex inicial como visitado
 		visiting(visitados, vertex);
 
 		while (true) {
 			Vertex* newV = nullptr;
 			Vertex* newI = getVertex(vertex->id);
-			bool find = false;
 
 			for (auto i = 0; i < newI->adjacencies.size(); i++) {
 				for (auto j = 0; j < vector_size; j++) {
@@ -283,28 +354,21 @@ public:
 					if (newI->adjacencies[i]->id._Equal(vertices[j]->id))
 					{
 						if (!visitados[j]) {
-							/*std::cout << "Visitando vertice " << vertices[j]->id << std::endl;
-							visitados[indexOfVertex(vertices[j]->id)] = true;
-							queue.push_back(vertices[j]);*/
 							/*
 								Marca o vertice atual da lista de ajcacencia como visitado
 								Realizando atualização de queue e vetor de visitados
 							*/
 							visiting(visitados, queue, vertices[j]);							
-							find = true;
-							break;
 						}
 					}
 
 				}
-				if (find)
-					break;
 			}
 
 			// Verifica se a queue esta vazia, para atualizar a nova posição
 			if (!queue.empty()) {
 				vertex = queue.front();
-				queue.pop_back();
+				queue.pop_front();
 			}
 			else {
 				bool emptyVector = true;
@@ -332,4 +396,6 @@ public:
 			}				
 		}
 	}
+
+	
 };

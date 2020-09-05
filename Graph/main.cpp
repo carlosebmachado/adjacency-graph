@@ -10,7 +10,8 @@ int main(void) {
 	graphs = readGraphData();
 
 	loadPrintTest(graphs);
-	graphs[4].BFS(graphs[4].getVertex("a"));
+	int NGrafo = 6;
+	graphs[NGrafo].DFS(graphs[NGrafo].getVertex("a"));
 
 	//testGraph();
 
