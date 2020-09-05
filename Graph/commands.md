@@ -1,20 +1,45 @@
 # Legend
-## Anything between {} is a parameter
-## [o] means Optional
-## // then anything is a comment
+- Anything between {} is a parameter
+- [o] means Optional
+
 
 # Program level
-## add graph {name} // Add a new graph
-## rem graph {name} // Remove a graph
-## sel graph {name} // Select a graph and move the application to Graph level
-## exit // Exists of application
+
+## Add a new graph
+### add graph {name}
+
+## Remove a graph
+### rem graph {name}
+
+## Select a graph and move the application to Graph level
+### sel graph {name}
+
+## Exits of application
+### exit
+
 
 # Graph level
-## add vertex {id} [o]{x} [o]{y} // Add a new vertex
-## add edge {id1} {id2} // Add a new edge
-## rem vertex {id} // Remove a vertex
-## rem edge {id1} {id2} // Remove a edge
-## bfs // Make a breadth-first search (busca em largura)
-## dfs // Make a depth-first search (busca em profundidade)
-## plot // Draw the graph on a graphic window
-## back // Exits of current graph
+
+## Add a new vertex
+### add vertex {id} [o]{x} [o]{y}
+
+## Add a new edge
+### add edge {id1} {id2}
+
+## Remove a vertex
+### rem vertex {id}
+
+## Remove a edge
+### rem edge {id1} {id2}
+
+## Make a breadth-first search (busca em largura)
+### bfs
+
+## Make a depth-first search (busca em profundidade)
+### dfs
+
+## Draw the graph on a graphic window
+### plot
+
+## Exits of current graph
+### back

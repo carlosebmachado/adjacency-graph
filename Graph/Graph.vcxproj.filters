@@ -30,6 +30,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="graph_data.bps">
+      <Filter>Arquivos de Recurso</Filter>
+    </None>
+    <None Include="commands.md">
+      <Filter>Arquivos de Recurso</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="trabalho1.txt">
@@ -55,5 +61,10 @@
     <ClInclude Include="graph.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="arial.ttf">
+      <Filter>Arquivos de Recurso</Filter>
+    </Font>
   </ItemGroup>
 </Project>
