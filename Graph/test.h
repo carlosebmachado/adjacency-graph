@@ -6,6 +6,10 @@
 void mainTest() {
 
 	//loadPrintTest(graphs);
+	int NGrafo = 6;
+	graphs[NGrafo].DFS(graphs[NGrafo].getVertex("a"));
+
+	//loadPrintTest(graphs);
 	//plotGraph(graphs[5]);
 	//loadPrintTest(graphs);
 	//graphs[4].BFS(graphs[4].getVertex("a"));
