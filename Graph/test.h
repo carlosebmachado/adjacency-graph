@@ -3,20 +3,6 @@
 #include "cmd.h"
 #include "util.h"
 
-void mainTest() {
-
-	//loadPrintTest(graphs);
-	int NGrafo = 6;
-	graphs[NGrafo].DFS(graphs[NGrafo].getVertex("a"));
-
-	//loadPrintTest(graphs);
-	//plotGraph(graphs[5]);
-	//loadPrintTest(graphs);
-	//graphs[4].BFS(graphs[4].getVertex("a"));
-	//testGraph();
-
-}
-
 void loadPrintTest(std::vector<Graph> graphs) {
 	for (auto graph : graphs) {
 		printAdjacencyVector(graph.getVector(), graph.text);

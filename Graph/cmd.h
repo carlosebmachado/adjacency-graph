@@ -105,7 +105,8 @@ Command parser(std::vector<std::string> &tokens) {
 			for (size_t i = 0; i < 2; i++) tokens.erase(tokens.begin());
 			return e_ADD_EDGE;
 		}
-		if (tokens[0]._Equal(c_REM) and tokens[1]._Equal(c_VERTEX)) {
+		if (tokens.size() == 3 and tokens[0]._Equal(c_REM) and tokens[1]._Equal(c_VERTEX)) {
+			for (size_t i = 0; i < 2; i++) tokens.erase(tokens.begin());
 			return e_REM_VERTEX;
 		}
 		if (tokens[0]._Equal(c_REM) and tokens[1]._Equal(c_EDGE)) {
