@@ -7,6 +7,8 @@
 const std::string c_ADD = "add";
 const std::string c_REM = "rem";
 const std::string c_SEL = "sel";
+const std::string c_CLS = "cls";
+const std::string c_LIST = "list";
 const std::string c_EXIT = "exit";
 
 const std::string c_GRAPH = "graph";
@@ -14,14 +16,20 @@ const std::string c_VERTEX = "vertex";
 const std::string c_EDGE = "edge";
 const std::string c_BFS = "bfs";
 const std::string c_DFS = "dfs";
+const std::string c_MATRIX = "matrix";
+const std::string c_VECTOR = "vector";
 const std::string c_PLOT = "plot";
 const std::string c_BACK = "back";
+const std::string c_HELP = "help";
 
 typedef short Command;
 
 enum CommandCodes {
 	e_NOCOMMAND,
 	e_ERROR,
+	e_HELP,
+	e_CLS,
+	e_LIST,
 	e_ADD_GRAPH,
 	e_REM_GRAPH,
 	e_SEL_GRAPH,
@@ -32,6 +40,8 @@ enum CommandCodes {
 	e_REM_EDGE,
 	e_BFS,
 	e_DFS,
+	e_MATRIX,
+	e_VECTOR,
 	e_PLOT,
 	e_BACK
 };
@@ -41,13 +51,18 @@ std::string TOKENS[] = {
 	c_REM,
 	c_SEL,
 	c_EXIT,
+	c_LIST,
 	c_GRAPH,
 	c_VERTEX,
 	c_EDGE,
 	c_BFS,
 	c_DFS,
+	c_MATRIX,
+	c_VECTOR,
 	c_PLOT,
-	c_BACK
+	c_BACK,
+	c_HELP,
+	c_CLS
 };
 
 bool isToken(std::string str) {
@@ -62,6 +77,8 @@ bool isToken(std::string str) {
 std::string readConsole() {
 	std::string line;
 	std::getline(std::cin, line);
+	std::transform(line.begin(), line.end(), line.begin(), [](unsigned char c) { return std::tolower(c); });
+	line += " ";
 	return line;
 }
 
@@ -69,11 +86,12 @@ std::vector<std::string> scanner(std::string line) {
 	auto tokens = std::vector<std::string>();
 	std::string word = "";
 	for (auto c : line) {
-		word += c;
-		if (isToken(word)) {
+		if (isToken(word) or c == ' ') {
 			tokens.push_back(word);
 			word = "";
+			continue;
 		}
+		word += c;
 	}
 	return tokens;
 }
@@ -82,7 +100,45 @@ Command parser(std::vector<std::string> &tokens) {
 	if (tokens.size() == 0) {
 		return e_NOCOMMAND;
 	}
-	if (tokens.size() > 1) {
+	if (tokens.size() == 1) {
+		if (tokens[0]._Equal(c_EXIT)) {
+			return e_EXIT;
+		}
+		if (tokens[0]._Equal(c_PLOT)) {
+			return e_PLOT;
+		}
+		if (tokens[0]._Equal(c_BACK)) {
+			return e_BACK;
+		}
+		if (tokens[0]._Equal(c_HELP)) {
+			return e_HELP;
+		}
+		if (tokens[0]._Equal(c_CLS)) {
+			return e_CLS;
+		}
+		if (tokens[0]._Equal(c_LIST)) {
+			return e_LIST;
+		}
+		if (tokens[0]._Equal(c_MATRIX)) {
+			tokens.erase(tokens.begin());
+			return e_MATRIX;
+		}
+		if (tokens[0]._Equal(c_VECTOR)) {
+			tokens.erase(tokens.begin());
+			return e_VECTOR;
+		}
+	}
+	if (tokens.size() == 2) {
+		if (tokens[0]._Equal(c_BFS)) {
+			tokens.erase(tokens.begin());
+			return e_BFS;
+		}
+		if (tokens[0]._Equal(c_DFS)) {
+			tokens.erase(tokens.begin());
+			return e_DFS;
+		}
+	}
+	if (tokens.size() > 2) {
 		if (tokens.size() == 3 and tokens[0]._Equal(c_SEL) and tokens[1]._Equal(c_GRAPH)) {
 			for (size_t i = 0; i < 2; i++) tokens.erase(tokens.begin());
 			return e_SEL_GRAPH;
@@ -109,24 +165,10 @@ Command parser(std::vector<std::string> &tokens) {
 			for (size_t i = 0; i < 2; i++) tokens.erase(tokens.begin());
 			return e_REM_VERTEX;
 		}
-		if (tokens[0]._Equal(c_REM) and tokens[1]._Equal(c_EDGE)) {
+		if (tokens.size() == 4 and tokens[0]._Equal(c_REM) and tokens[1]._Equal(c_EDGE)) {
+			for (size_t i = 0; i < 2; i++) tokens.erase(tokens.begin());
 			return e_REM_EDGE;
 		}
-	}
-	if (tokens[0]._Equal(c_EXIT)) {
-		return e_EXIT;
-	}
-	if (tokens[0]._Equal(c_BFS)) {
-		return e_BFS;
-	}
-	if (tokens[0]._Equal(c_DFS)) {
-		return e_DFS;
-	}
-	if (tokens[0]._Equal(c_PLOT)) {
-		return e_PLOT;
-	}
-	if (tokens[0]._Equal(c_BACK)) {
-		return e_BACK;
 	}
 	return e_ERROR;
 }

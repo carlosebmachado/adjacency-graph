@@ -17,6 +17,15 @@
 ### Exits of application
 - exit
 
+### Clean console
+- cls
+
+### Show help
+- help
+
+### List graphs
+- list
+
 
 # Graph level
 
@@ -33,10 +42,10 @@
 - rem edge {id1} {id2}
 
 ### Make a breadth-first search (busca em largura)
-- bfs
+- bfs {id}
 
 ### Make a depth-first search (busca em profundidade)
-- dfs
+- dfs {id}
 
 ### Draw the graph on a graphic window
 - plot

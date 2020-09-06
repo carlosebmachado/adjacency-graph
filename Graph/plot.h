@@ -105,10 +105,11 @@ void plotGraph(Graph graph) {
     while (not close) {
         al_clear_to_color(al_map_rgb(255, 255, 255));
 
-        al_draw_text(font, al_map_rgb(0, 0, 0), 50, 50, 0, graph.text.c_str());
-
         close = checkClose();
-
+        std::string gtxt = "Graph: ";
+        gtxt += graph.text;
+        al_draw_text(font, al_map_rgb(0, 0, 0), 10, 10, 0, gtxt.c_str());
+        al_draw_text(font, al_map_rgb(0, 0, 0), 10, 35, 0, "Press ESC to close");
         for (auto v : graph.vertices) {
             for (auto e : v->adjacencies) {
                 drawEdge(v->x, v->y, e->x, e->y);

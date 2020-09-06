@@ -36,7 +36,7 @@ std::vector<Graph> readGraphData() {
 }
 
 void printAdjacencyVector(std::vector<std::vector<std::string>> adjVertex, std::string text) {
-    std::cout << std::endl << std::endl << "----------------------------------" << std::endl;
+    std::cout << std::endl << "----------------------------------" << std::endl;
     std::cout << "Adjacency Vector: " << text << std::endl << std::endl;
     for (auto v : adjVertex) {
         for (auto t : v) {
@@ -48,7 +48,7 @@ void printAdjacencyVector(std::vector<std::vector<std::string>> adjVertex, std::
 }
 
 void printAdjacencyMatrix(int** adjMatrix, size_t size, std::vector<Vertex*> vertices, std::string text) {
-    std::cout << std::endl << std::endl << "----------------------------------" << std::endl;
+    std::cout << std::endl << "----------------------------------" << std::endl;
     std::cout << "Adjacency Matrix: " << text << std::endl << std::endl;
     for (auto i = 0; i < size; i++) std::cout << "     " << vertices[i]->id;
     std::cout << std::endl;

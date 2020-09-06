@@ -31,7 +31,7 @@
 >
 
 <graph6
-	name:Graphic test
+	name:plot
 	vertices:1,2,3,4
 	xy:400,50|450,225|400,400|350,225
 	edges:1,2|1,3|2,3|2,4|3,4

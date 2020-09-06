@@ -7,6 +7,7 @@
 #include <list> 
 #include <queue> // fila para usar na BFS
 
+// Preenche e retorna uma matriz de zeros
 int** createMatrixZeros(size_t rows, size_t cols) {
 	int** matrix = new int* [rows];
 	for (auto i = 0; i < rows; i++) {
@@ -148,14 +149,6 @@ public:
 		return -1;
 	}
 
-	int getDegreeOutput(std::string id) { return 0; }
-	int getDegreeInput(std::string id) { return 0; }
-
-	bool isNeighborhood(std::string id1, std::string id2) { 
-		
-		return true;
-	}
-
 	std::vector<std::vector<std::string>> getVector() {
 		auto adjVector = std::vector<std::vector<std::string>>();
 		for (auto v : vertices) {
@@ -183,7 +176,7 @@ public:
 	}
 
 	// Verifica se os vertice v1 é vizinho de v2, respeitando as direçõeos
-	bool neighbourhood(Vertex* v1, Vertex* v2) {
+	bool isNeighborhood(Vertex* v1, Vertex* v2) {
 		for (int i = 0; i < v1->adjacencies.size(); i++)
 			if (v1->adjacencies[i]->id == v2->id)
 				return true;
