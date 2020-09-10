@@ -260,20 +260,20 @@ void printMessage(std::string msg) {
 void help() {
 	std::string msg = "";
 	msg += "\n";
-	msg += "add graph {name}                  Adds a new graph.\n";
-	msg += "rem graph {name}                  Removes a graph.\n";
-	msg += "sel graph {name}                  Select a graph and move the application to Graph level.\n";
-	msg += "cls                               Clean the console.\n";
-	msg += "list                              List graphs.\n";
-	msg += "exit                              Close the application.\n\n";
-	msg += "add vertex {id} [o]{x} [o]{y}     Graph level: Adds a new vertex.\n";
-	msg += "rem vertex {id}                   Graph level: Removes a vertex.\n";
-	msg += "add edge {id1} {id2}              Graph level: Adds a new edge.\n";
-	msg += "rem edge {id1} {id2}              Graph level: Removes a edge.\n";
-	msg += "bfs {id}                          Graph level: Make a breadth-first search (busca em largura).\n";
-	msg += "dfs {id}                          Graph level: Make a depth-first search (busca em profundidade).\n";
-	msg += "plot                              Graph level: Draw the graph on a graphic window.\n";
-	msg += "back                              Graph level: Exits of current graph.\n\n";
+	msg += "add graph {name}              Adds a new graph\n";
+	msg += "rem graph {name}              Removes a graph\n";
+	msg += "sel graph {name}              Select a graph and move the application to Graph level\n";
+	msg += "cls                           Clean the console\n";
+	msg += "list                          List all graphs\n";
+	msg += "exit                          Close the application\n\n";
+	msg += "add vertex {id} {x} {y}       Graph level: Adds a new vertex (params x and y are optional)\n";
+	msg += "rem vertex {id}               Graph level: Removes a vertex\n";
+	msg += "add edge {id1} {id2}          Graph level: Adds a new edge\n";
+	msg += "rem edge {id1} {id2}          Graph level: Removes a edge\n";
+	msg += "bfs {id}                      Graph level: Make a breadth-first search (busca em largura)\n";
+	msg += "dfs {id}                      Graph level: Make a depth-first search (busca em profundidade)\n";
+	msg += "plot                          Graph level: Draw the graph on a graphic window\n";
+	msg += "back                          Graph level: Exits of current graph\n\n";
 	printMessage(msg);
 }
 
