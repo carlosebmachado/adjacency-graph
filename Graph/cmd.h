@@ -4,24 +4,25 @@
 #include <vector>
 #include <string>
 
-const std::string c_LANG = "lang";
-const std::string c_ADD = "add";
-const std::string c_REM = "rem";
-const std::string c_SEL = "sel";
-const std::string c_CLS = "cls";
-const std::string c_LIST = "list";
-const std::string c_EXIT = "exit";
+const char* c_LANG = "lang";
+const char* c_ADD = "add";
+const char* c_REM = "rem";
+const char* c_SEL = "sel";
+const char* c_CLS = "cls";
+const char* c_LIST = "list";
+const char* c_EXIT = "exit";
 
-const std::string c_GRAPH = "graph";
-const std::string c_VERTEX = "vertex";
-const std::string c_EDGE = "edge";
-const std::string c_BFS = "bfs";
-const std::string c_DFS = "dfs";
-const std::string c_MATRIX = "matrix";
-const std::string c_VECTOR = "vector";
-const std::string c_PLOT = "plot";
-const std::string c_BACK = "back";
-const std::string c_HELP = "help";
+
+const char* c_GRAPH = "graph";
+const char* c_VERTEX = "vertex";
+const char* c_EDGE = "edge";
+const char* c_BFS = "bfs";
+const char* c_DFS = "dfs";
+const char* c_MATRIX = "matrix";
+const char* c_VECTOR = "vector";
+const char* c_PLOT = "plot";
+const char* c_BACK = "back";
+const char* c_HELP = "help";
 
 typedef short Command;
 
@@ -48,7 +49,7 @@ enum CommandCodes {
 	e_BACK
 };
 
-std::string TOKENS[] = {
+const char* TOKENS[] = {
 	c_LANG,
 	c_ADD,
 	c_REM,
