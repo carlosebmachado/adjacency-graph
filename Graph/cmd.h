@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 
+const std::string c_LANG = "lang";
 const std::string c_ADD = "add";
 const std::string c_REM = "rem";
 const std::string c_SEL = "sel";
@@ -24,9 +25,10 @@ const std::string c_HELP = "help";
 
 typedef short Command;
 
-enum CommandCodes {
+enum CommandCodes {	
 	e_NOCOMMAND,
 	e_ERROR,
+	e_LANG,
 	e_HELP,
 	e_CLS,
 	e_LIST,
@@ -47,6 +49,7 @@ enum CommandCodes {
 };
 
 std::string TOKENS[] = {
+	c_LANG,
 	c_ADD,
 	c_REM,
 	c_SEL,
@@ -136,6 +139,10 @@ Command parser(std::vector<std::string> &tokens) {
 		if (tokens[0]._Equal(c_DFS)) {
 			tokens.erase(tokens.begin());
 			return e_DFS;
+		}
+		if (tokens[0]._Equal(c_LANG)) {
+			tokens.erase(tokens.begin());
+			return e_LANG;
 		}
 	}
 	if (tokens.size() > 2) {
