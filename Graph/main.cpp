@@ -48,7 +48,7 @@ int main(void) {
 
 	setLanguage();
 	printMessage("\nDisciplina de Grafos - Projeto 1", "\nGraph Class - Project 1");
-	printMessage("Para mais detalhes digite help.", "For more details type help.");	
+	printMessage("Para mais detalhes digite help.", "For more details type help.");
 
 	while (running) {
 		std::cout << "cmd>";
@@ -297,6 +297,7 @@ void setLanguage() {
 		std::cout << std::endl;
 		printError("You need select pt-br or en-us as the main language.", "You need select pt-br or en-us as the main language.");
 	}
+	printMessage("Alterado.", "Changed.");
 	readConsole();
 }
 
@@ -309,6 +310,7 @@ void help() {
 		msg += "sel graph {name}                  Seleciona um grafo e move para nivel de grafo.\n";
 		msg += "cls                               Limpa o console.\n";
 		msg += "list                              Lista os grafos.\n";
+		msg += "lang pt-br|en-us                  Muda o idioma.\n";
 		msg += "exit                              Fecha a aplicação.\n\n";
 		msg += "add vertex {id} [o]{x} [o]{y}     Grafo level: Adiciona um novo vertice.\n";
 		msg += "rem vertex {id}                   Grafo level: Remove um vertice.\n";
@@ -325,6 +327,7 @@ void help() {
 		msg += "sel graph {name}                  Select a graph and move the application to Graph level.\n";
 		msg += "cls                               Clean the console.\n";
 		msg += "list                              List graphs.\n";
+		msg += "lang pt-br|en-us                  Changes language.\n";
 		msg += "exit                              Close the application.\n\n";
 		msg += "add vertex {id} [o]{x} [o]{y}     Graph level: Adds a new vertex.\n";
 		msg += "rem vertex {id}                   Graph level: Removes a vertex.\n";
