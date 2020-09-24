@@ -48,3 +48,21 @@
 	vertices:a,b,c,d,e,f,g,h,i
 	edges:a,e|a,i|a,f|a,g|b,g|c,h|d,h|e,a|e,f|e,i|f,a|f,e|f,i|g,a|g,b|h,c|h,d|i,e|i,a|i,f
 >
+
+<graph9
+	name:directTransitiveClosure	
+	vertices:a,b,c,d,e,f,g,h,i
+	edges:a,b|a,d|b,a|b,e|d,a|d,f|e,b|e,c|e,i|e,g|c,e|c,h|f,d|f,g|g,f|g,e|h,c|h,i|i,e|i,h
+>
+
+<graph10
+	name:indirectTransitiveClosure	
+	vertices:a,b,c,d,e,f,g,h,i
+	edges:a,d|a,e|b,c|b,e|c,b|c,h|c,i|d,a|d,b|d,f|e,a|e,b|e,g|f,d|f,g|g,f|g,e|g,i|h,c|h,i|i,c|i,g|i,h
+>
+
+<graph11
+	name:naoConexo	
+	vertices:a,b,c,d,e,f,g,h,i
+	edges:a,d|a,e|b,c|c,b|c,h|c,i|d,a|d,f|e,a|e,g|f,d|f,g|g,f|g,e|h,c|h,i|i,c|i,h
+>

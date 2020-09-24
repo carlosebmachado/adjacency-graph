@@ -5,7 +5,7 @@
 #include "util.h"
 #include "plot.h"
 
-#define DEBUG false
+#define DEBUG true
 
 std::vector<Graph> graphs;
 Graph* curGraph;
@@ -415,8 +415,19 @@ bool execmd(Command command, std::vector<std::string> tokens) {
 void mainTest() {
 
 	//loadPrintTest(graphs);
-	int NGrafo = 6;
-	graphs[NGrafo].DFS(graphs[NGrafo].getVertex("a"));
+	int NGrafo = 10;
+
+	//graphs[NGrafo].DFS(graphs[NGrafo].getVertex("a"));
+	curGraph = &graphs[NGrafo];
+
+	printAdjacencyMatrix(curGraph->getMatrix(), curGraph->vertices.size(), curGraph->vertices, curGraph->text);
+	//graphs[NGrafo].indirectTransitiveClosure(graphs[NGrafo].getVertex("a"));
+
+	std::cout << std::endl << std::endl;
+	if (graphs[NGrafo].isConnectivity())
+		std::cout << "O grafo informado é conexo";
+	else
+		std::cout << "O grafo informado não é conexo";
 
 	//loadPrintTest(graphs);
 	//plotGraph(graphs[5]);
