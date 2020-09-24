@@ -318,6 +318,8 @@ void help() {
 		msg += "rem edge {id1} {id2}              Grafo level: Remove uma aresta.\n";
 		msg += "bfs {id}                          Grafo level: Realiza a busca em largura (BFS).\n";
 		msg += "dfs {id}                          Grafo level: Realiza a busca em profundidade (DFS).\n";
+		msg += "matrix                            Grafo level: Mostra a matrix de adjacência.\n";
+		msg += "vector                            Grafo level: Mostra o vetor de adjacência.\n";
 		msg += "plot                              Grafo level: Desenha o grafo em uma janela gráfica.\n";
 		msg += "back                              Grafo level: Sai do grafo atual.\n";
 	}
@@ -335,6 +337,8 @@ void help() {
 		msg += "rem edge {id1} {id2}              Graph level: Removes a edge.\n";
 		msg += "bfs {id}                          Graph level: Make a breadth-first search (BFS).\n";
 		msg += "dfs {id}                          Graph level: Make a depth-first search (DFS).\n";
+		msg += "matrix                            Grafo level: Shows adjacency matrix.\n";
+		msg += "vector                            Grafo level: Shows adjacency vector.\n";
 		msg += "plot                              Graph level: Draw the graph on a graphic window.\n";
 		msg += "back                              Graph level: Exits of current graph.\n";
 	}

@@ -1,0 +1,6 @@
+# test graphs
+
+<graph7
+	vertices:a,b,c,d,e,f
+	edges:a,c|b,a|b,d|c,b|d,f|e,d|e,c|f,e
+>

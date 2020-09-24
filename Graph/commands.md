@@ -41,6 +41,12 @@
 ### Remove a edge
 - rem edge {id1} {id2}
 
+### Print matrix
+- matrix
+
+### Print vector
+- vector
+
 ### Make a breadth-first search (busca em largura)
 - bfs {id}
 

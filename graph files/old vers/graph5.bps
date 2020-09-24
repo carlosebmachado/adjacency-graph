@@ -1,0 +1,7 @@
+# test graphs
+
+<graph5
+	name:test5
+	vertices:a,e,i,f,g,b,c,h,d
+	edges:a,e|a,i|a,f|a,g|e,a|e,i|e,f|i,e|i,a|i,f|f,i|f,e|f,a|g,a|g,b|b,g|c,h|h,c|h,d|d,h
+>

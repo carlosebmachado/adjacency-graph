@@ -1,0 +1,7 @@
+# test graphs
+
+<graph4
+	name:test4
+	vertices:a,b,c,d,e,f	
+	edges:a,b|a,c|b,a|b,c|b,d|c,e|c,b|c,a|d,b|d,f|d,e|e,d|e,c|e,f|f,d|f,e
+>

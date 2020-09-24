@@ -1,0 +1,6 @@
+# test graphs
+
+<graph8
+	vertices:a,b,c,d,e,f,g,h,i
+	edges:a,e|a,i|a,f|a,g|b,g|c,h|d,h|e,a|e,f|e,i|f,a|f,e|f,i|g,a|g,b|h,c|h,d|i,e|i,a|i,f
+>

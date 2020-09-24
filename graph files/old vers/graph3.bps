@@ -1,0 +1,7 @@
+# test graphs
+
+<graph3
+	name:test3
+	vertices:a,b,c,d,e,f,g,h,i
+	edges:a,e|a,f|e,i|i,a|f,e|f,i|b,g|g,a|c,h|h,d
+>
