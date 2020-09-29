@@ -129,6 +129,27 @@ void GraphFile::on_btnBFS_clicked()
     QMessageBox::information(this, "BFS", QString(graph.BFS(new Vertex(id.toStdString())).c_str()));
 }
 
+void GraphFile::on_btnConnected_clicked()
+{
+    QString title = "Verificação de grafo conexo";
+    // TODO: Substituir pela função de verificação. Ex:
+    // bool isConnected = graph.isConnected();
+    bool isConnected = false;
+    if(isConnected){
+        // caso seja conexo
+        QMessageBox::information(this, title, "O grafo é conexo.");
+    } else {
+        // caso não seja
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, title, "O grafo não é conexo. Deseja identificar os subgrafos fortemente conexos?");
+        if (reply == QMessageBox::Yes) {
+            // clicou em sim, então rodo a função para encontra-los
+            QString subGraphs = "";
+            QMessageBox::information(this, "Subgrafos fortemente conexos", subGraphs);
+        }
+    }
+}
+
 
 // interface update
 void GraphFile::updateAdjacencyVector() {
@@ -238,33 +259,3 @@ void GraphFile::save(std::string path){
     // salva no disco
     BPS::write(file, this->path);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -35,6 +35,8 @@ private slots:
     void on_btnDFS_clicked();
     void on_btnBFS_clicked();
 
+    void on_btnConnected_clicked();
+
 private:
     Ui::GraphFile *ui;
 };

@@ -251,7 +251,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>Direcionado?</string>
+           <string>Dirigido?</string>
           </property>
          </widget>
         </widget>
@@ -322,6 +322,19 @@
            </rect>
           </property>
          </widget>
+         <widget class="QPushButton" name="btnConnected">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>60</y>
+            <width>211</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Verificar se é conexo...</string>
+          </property>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -330,6 +343,21 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>txtVertexID</tabstop>
+  <tabstop>btnAddVertex</tabstop>
+  <tabstop>btnRemoveVertex</tabstop>
+  <tabstop>txtEdges</tabstop>
+  <tabstop>cbDirection</tabstop>
+  <tabstop>btnAddEdge</tabstop>
+  <tabstop>btnRemoveEdge</tabstop>
+  <tabstop>txtSearchID</tabstop>
+  <tabstop>btnDFS</tabstop>
+  <tabstop>btnBFS</tabstop>
+  <tabstop>btnConnected</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>scrollArea_2</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
