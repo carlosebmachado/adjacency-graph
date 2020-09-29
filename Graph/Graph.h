@@ -399,7 +399,7 @@ public:
 		bool* visit_ended = new bool[vector_size];
 
 		for (int i = 0; i < vector_size; i++)
-			waitList[i] = NULL;
+			waitList[i] = (-1);
 
 		for (int i = 0; i < vector_size; i++)
 			visit_ended[i] = false;
@@ -410,7 +410,7 @@ public:
 
 		while (true) {
 			for (int j = 0; j < vector_size; j++) {
-				if (matrix[index][j] == 1 && !visit_ended[j] && waitList[j] == NULL) {
+				if (matrix[index][j] == 1 && !visit_ended[j] && waitList[j] == (-1)) {
 					waitList[j] = distance;
 					//std::cout << "Vertice: " << getVertex(j)->id << " marcado com a distancia -> " << distance << std::endl;
 				}
@@ -419,7 +419,7 @@ public:
 			visit_ended[index] = true;
 			index = -1;
 			for (int i = 0; i < vector_size; i++) {
-				if (waitList[i] != NULL && !visit_ended[i] && waitList[i] == distance - 1) {
+				if (waitList[i] != (-1) && !visit_ended[i] && waitList[i] == distance - 1) {
 					//std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
 					index = i;
 					distance = waitList[i] + 1;
@@ -429,7 +429,7 @@ public:
 
 			if (index == -1) {
 				for (int i = 0; i < vector_size; i++) {
-					if (waitList[i] != NULL && !visit_ended[i]) {
+					if (waitList[i] != (-1) && !visit_ended[i]) {
 						//std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
 						index = i;
 						distance = waitList[i] + 1;
@@ -443,7 +443,7 @@ public:
 
 			bool existNull = false;
 			for (int i = 0; i < vector_size; i++)
-				if (waitList[i] == NULL)
+				if (waitList[i] == (-1))
 					existNull = true;
 
 			if (!existNull)
@@ -466,7 +466,7 @@ public:
 		bool* visit_ended = new bool[vector_size];
 
 		for (int i = 0; i < vector_size; i++)
-			waitList[i] = NULL;
+			waitList[i] = (-1);
 
 		for (int i = 0; i < vector_size; i++)
 			visit_ended[i] = false;
@@ -477,7 +477,7 @@ public:
 
 		while (true) {
 			for (int i = 0; i < vector_size; i++) {
-				if (matrix[i][index] == 1 && !visit_ended[i] && waitList[i] == NULL) {
+				if (matrix[i][index] == 1 && !visit_ended[i] && waitList[i] == (-1)) {
 					waitList[i] = distance;
 					//std::cout << "Vertice: " << getVertex(i)->id << " marcado com a distancia -> " << distance << std::endl;
 				}
@@ -486,7 +486,7 @@ public:
 			visit_ended[index] = true;
 			index = -1;
 			for (int i = 0; i < vector_size; i++) {
-				if (waitList[i] != NULL && !visit_ended[i] && waitList[i] == distance - 1) {
+				if (waitList[i] != (-1) && !visit_ended[i] && waitList[i] == distance - 1) {
 					//std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
 					index = i;
 					distance = waitList[i] + 1;
@@ -496,7 +496,7 @@ public:
 
 			if (index == -1) {
 				for (int i = 0; i < vector_size; i++) {
-					if (waitList[i] != NULL && !visit_ended[i]) {
+					if (waitList[i] != (-1) && !visit_ended[i]) {
 						//std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
 						index = i;
 						distance = waitList[i] + 1;
@@ -510,7 +510,7 @@ public:
 
 			bool existNull = false;
 			for (int i = 0; i < vector_size; i++)
-				if (waitList[i] == NULL)
+				if (waitList[i] == (-1))
 					existNull = true;
 
 			if (!existNull)
@@ -529,15 +529,16 @@ public:
 		int* direct = directTransitiveClosure(vertices[0]);
 		int* indirect = indirectTransitiveClosure(vertices[0]);
 
-		int counterZeros = 0;
+		int counterDirect = 0;
+		int counterIndirect = 0;
 		for (int i = 0; i < vertices.size(); i++) {
-			if (direct[i] == 0)
-				counterZeros++;
-			if (indirect[i] == 0)
-				counterZeros++;
+			if (direct[i] == (-1))
+				counterDirect++;
+			if (indirect[i] == (-1))
+				counterIndirect++;
 		}
 
-		if (counterZeros != 2)
+		if (counterDirect != counterIndirect)
 			return false;
 		else
 			return true;
