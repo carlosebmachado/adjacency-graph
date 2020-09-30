@@ -49,9 +49,6 @@
     <ClInclude Include="util.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="cmd.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="test.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -59,6 +56,9 @@
       <Filter>Arquivos de Cabeçalho\BPS</Filter>
     </ClInclude>
     <ClInclude Include="graph.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="parser.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

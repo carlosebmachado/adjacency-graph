@@ -1,12 +1,5 @@
-#include "QWidgetAction"
 #include "graphfile.h"
 #include "ui_graphfile.h"
-#include "QMessageBox"
-#include "BPS.hpp"
-#include "util.hpp"
-
-#include <QStandardItemModel>
-#include <QTreeWidgetItem>
 
 GraphFile::GraphFile(QWidget *parent) :
     QWidget(parent),
@@ -116,6 +109,7 @@ void GraphFile::on_btnDFS_clicked()
     QString id = ui->txtSearchID->text();
     if(id == ""){
         QMessageBox::warning(this, "Erro", "ID não pode ser vazio.");
+        return;
     }
     QMessageBox::information(this, "DFS", QString(graph.DFS(new Vertex(id.toStdString())).c_str()));
 }
@@ -125,6 +119,7 @@ void GraphFile::on_btnBFS_clicked()
     QString id = ui->txtSearchID->text();
     if(id == ""){
         QMessageBox::warning(this, "Erro", "ID não pode ser vazio.");
+        return;
     }
     QMessageBox::information(this, "BFS", QString(graph.BFS(new Vertex(id.toStdString())).c_str()));
 }
@@ -132,9 +127,8 @@ void GraphFile::on_btnBFS_clicked()
 void GraphFile::on_btnConnected_clicked()
 {
     QString title = "Verificação de grafo conexo";
-    // TODO: Substituir pela função de verificação. Ex:
-    // bool isConnected = graph.isConnected();
-    bool isConnected = false;
+    // verifica se é conexo
+    bool isConnected = graph.isConnectivity();
     if(isConnected){
         // caso seja conexo
         QMessageBox::information(this, title, "O grafo é conexo.");
@@ -143,8 +137,16 @@ void GraphFile::on_btnConnected_clicked()
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, title, "O grafo não é conexo. Deseja identificar os subgrafos fortemente conexos?");
         if (reply == QMessageBox::Yes) {
-            // clicou em sim, então rodo a função para encontra-los
+            // clicou em sim, então roda a função para encontra-los
+            std::vector<Graph> graphs = graph.getSubGraphs();
             QString subGraphs = "";
+            for(auto sg : graphs){
+                subGraphs += "Subgrafo fortemente conexo <";
+                subGraphs += sg.text.c_str();
+                subGraphs += ">:\n";
+                subGraphs += sg.getStrAdjMatrix().c_str();
+                subGraphs += "\n\n";
+            }
             QMessageBox::information(this, "Subgrafos fortemente conexos", subGraphs);
         }
     }
@@ -153,40 +155,11 @@ void GraphFile::on_btnConnected_clicked()
 
 // interface update
 void GraphFile::updateAdjacencyVector() {
-    QString newText = "";
-
-    for (auto v : graph.getVector()) {
-        for (auto t : v) {
-            newText += t.c_str();
-        }
-        newText += "\n";
-    }
-
-    ui->lblVector->setText(newText);
+    ui->lblVector->setText(graph.getStrAdjVector().c_str());
 }
 
 void GraphFile::updateAdjacencyMatrix() {
-    int** adjMatrix = graph.getMatrix();
-    size_t size = graph.vertices.size();
-    QString newText = "";
-
-    for (size_t i = 0; i < size; i++) {
-        newText += "     ";
-        newText += graph.vertices[i]->id.c_str();
-    }
-    newText += "\n";
-    for (size_t i = 0; i < size; i++) {
-        newText += graph.vertices[i]->id.c_str();
-        newText += " ";
-        for (size_t j = 0; j < size; j++) {
-            newText += " [ ";
-            newText += std::to_string(adjMatrix[i][j]).c_str();
-            newText += " ]";
-        }
-        newText += "\n";
-    }
-
-    ui->lblMatrix->setText(newText);
+    ui->lblMatrix->setText(graph.getStrAdjMatrix().c_str());
 }
 
 void GraphFile::open(std::string path){

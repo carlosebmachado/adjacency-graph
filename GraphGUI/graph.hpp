@@ -63,16 +63,16 @@ public:
         this->vertices = vertices;
     }
 
-    // Adiciona um novo v�rtice
+    // Adiciona um novo vertice
     bool addVertex(Vertex* vertex) {
-        if (not existis(vertex->id)) {
+        if (!existis(vertex->id)) {
             vertices.push_back(vertex);
             return true;
         }
         return false;
     }
 
-    // Remove um v�rtice � partir do id
+    // Remove um vertice a partir do id
     bool removeVertex(std::string id) {
         for (size_t i = 0; i < vertices.size(); i++) {
             if (vertices[i]->id == id) {
@@ -83,14 +83,14 @@ public:
         return false;
     }
 
-    // Verifica se um v�rtice existe
+    // Verifica se um vertice existe
     bool existis(std::string id) {
         for (auto v : vertices)
             if (v->id == id) return true;
         return false;
     }
 
-    // Adiciona uma nova aresta � partir do id do v�rtice 1 e do v�rtice 2
+    // adiciona uma nova aresta a partir do id do vertice 1 e do vertice 2
     bool addEdge(std::string id1, std::string id2) {
         for (auto v1 : vertices) {
             if (v1->id == id1) {
@@ -105,7 +105,7 @@ public:
         return false;
     }
 
-    // Remove uma aresta � partir do id do v�rtice 1 e do v�rtice 2
+    // remove uma aresta a partir do id do vertice 1 e do vertice 2
     bool removeEdge(std::string id1, std::string id2) {
         for (auto v1 : vertices) {
             if (v1->id == id1) {
@@ -120,7 +120,7 @@ public:
         return false;
     }
 
-    //
+    // retorna o endereço de memoria do id passado
     Vertex* getVertex(std::string id) {
         for (size_t i = 0; i < vertices.size(); i++) {
             if (vertices[i]->id == id) {
@@ -130,11 +130,11 @@ public:
         return nullptr;
     }
 
-    Vertex* getVertex(int index) {
-        return vertices[index];
+    Vertex* getVertex(size_t index) {
+        return (Vertex*) vertices[index];
     }
 
-    //
+    // retorna o indice de um vertice na lista de adjacencias
     size_t indexOfVertex(std::string id) {
         for (size_t i = 0; i < vertices.size(); i++) {
             if (vertices[i]->id == id) {
@@ -144,8 +144,37 @@ public:
         return -1;
     }
 
-    std::vector<std::vector<std::string>> getVector() {
+    // retorna uma string contendo a matrix de adj
+    std::string getStrAdjMatrix() {
+        int** adjMatrix = getAdjMatrix();
+        size_t size = vertices.size();
+        std::string str = "";
+
+        // concatena a matriz em uma str junto com o id de cada vertice
+        for (size_t i = 0; i < size; i++) {
+            str += "     ";
+            str += vertices[i]->id.c_str();
+        }
+        str += "\n";
+        for (size_t i = 0; i < size; i++) {
+            str += vertices[i]->id.c_str();
+            str += " ";
+            for (size_t j = 0; j < size; j++) {
+                str += " [ ";
+                str += std::to_string(adjMatrix[i][j]).c_str();
+                str += " ]";
+            }
+            str += "\n";
+        }
+
+        return str;
+    }
+
+    // retorna uma string contendo o vetor de ajacencia
+    std::string getStrAdjVector() {
         auto adjVector = std::vector<std::vector<std::string>>();
+        std::string str = "";
+        // cria um vetor de strings (cada linha um vertice)
         for (auto v : vertices) {
             adjVector.push_back(std::vector<std::string>());
             adjVector[adjVector.size() - 1].push_back("([ " + v->id + " ])");
@@ -153,21 +182,24 @@ public:
                 adjVector[adjVector.size() - 1].push_back(" -> [ " + a->id + " ]");
             }
         }
-        return adjVector;
-    }
 
-    // Preenche e retorna uma matriz de zeros
-    int** createMatrixOfZeros(size_t rows, size_t cols) {
-        int** matrix = new int* [rows];
-        for (size_t i = 0; i < rows; i++) {
-            matrix[i] = new int[cols];
-            for (size_t j = 0; j < cols; j++)
-                matrix[i][j] = 0;
+        for (auto v : adjVector) {
+            for (auto t : v) {
+                str += t.c_str();
+            }
+            str += "\n";
         }
-        return matrix;
+
+        return str;
     }
 
-    int** getMatrix() {
+    // retorna a lista de adj
+    std::vector<Vertex*> getAdjVector(){
+        return vertices;
+    }
+
+    // retorna a matriz de adj crua
+    int** getAdjMatrix() {
         auto matrix = createMatrixOfZeros(vertices.size(), vertices.size());
         for (size_t i = 0; i < vertices.size(); i++) {
             for (size_t j = 0; j < vertices.size(); j++) {
@@ -179,6 +211,52 @@ public:
             }
         }
         return matrix;
+    }
+
+    // preenche e retorna uma matriz de zeros
+    int** createMatrixOfZeros(size_t rows, size_t cols) {
+        int** matrix = new int* [rows];
+        for (size_t i = 0; i < rows; i++) {
+            matrix[i] = new int[cols];
+            for (size_t j = 0; j < cols; j++)
+                matrix[i][j] = 0;
+        }
+        return matrix;
+    }
+
+    std::vector<Graph> getSubGraphs(){
+        auto graphs = std::vector<Graph>();
+
+        if(!isConnectivity()){
+            for(size_t i = 0; i < vertices.size(); i++){
+                bool isInSet = false;
+                for(auto g : graphs){
+                    for(auto v : g.vertices){
+                        if(v->id == vertices[i]->id){
+                            isInSet = true;
+                            break;
+                        }
+                    }
+                    if(isInSet) break;
+                }
+                if(isInSet) continue;
+
+                auto graph = Graph(std::to_string(i));
+                int* direct = directTransitiveClosure(vertices[i]);
+                int* indirect = indirectTransitiveClosure(vertices[i]);
+
+                for(size_t j = 0; j < vertices.size(); j++)
+                    if(direct[j] != -1 && indirect[j] != -1)
+                        graph.addVertex(getVertex(j));
+
+                graphs.push_back(graph);
+                size_t gsizes = 0;
+                for(auto g : graphs) gsizes += g.vertices.size();
+                if(gsizes == vertices.size()) break;
+            }
+        }
+
+        return graphs;
     }
 
     // ---------------- HERIKC ↓
@@ -293,7 +371,7 @@ public:
 
     // BFS baseadp na ordem de entrada
     std::string BFS(Vertex* vertex) {
-        std::string dfsString = "";
+        std::string bfsString = "";
 
         std::list<Vertex*> queue;
         size_t vector_size = vertices.size();
@@ -303,7 +381,7 @@ public:
             visitados[i] = false;
 
         // Marca o vertex inicial como visitado
-        visiting(visitados, vertex);
+        bfsString += visiting(visitados, vertex);
 
         while (true) {
             Vertex* newI = getVertex(vertex->id);
@@ -318,7 +396,7 @@ public:
                                 Marca o vertice atual da lista de ajcacencia como visitado
                                 Realizando atualiza��o de queue e vetor de visitados
                             */
-                            visiting(visitados, queue, vertices[j]);
+                            bfsString += visiting(visitados, queue, vertices[j]);
                         }
                     }
 
@@ -346,7 +424,7 @@ public:
                         vertex = queue.front();
                         queue.pop_back();
 
-                        visiting(visitados, vertex);
+                        bfsString += visiting(visitados, vertex);
                         break;
                     }
                 }
@@ -356,7 +434,162 @@ public:
             }
         }
 
-        return dfsString;
+        return bfsString;
+    }
+
+    // Fecho transitivo Direto
+    int* directTransitiveClosure(Vertex* vertex) {
+        int** matrix = getAdjMatrix();
+
+        size_t vector_size = vertices.size();
+        int* waitList = new int[vector_size];
+        bool* visit_ended = new bool[vector_size];
+
+        for (size_t i = 0; i < vector_size; i++)
+            waitList[i] = (-1);
+
+        for (size_t i = 0; i < vector_size; i++)
+            visit_ended[i] = false;
+
+        size_t index = indexOfVertex(vertex->id);
+        waitList[index] = 0;
+        int distance = 1;
+
+        while (true) {
+            for (size_t j = 0; j < vector_size; j++) {
+                if (matrix[index][j] == 1 && !visit_ended[j] && waitList[j] == (-1)) {
+                    waitList[j] = distance;
+                    //std::cout << "Vertice: " << getVertex(j)->id << " marcado com a distancia -> " << distance << std::endl;
+                }
+            }
+
+            visit_ended[index] = true;
+            index = -1;
+            for (size_t i = 0; i < vector_size; i++) {
+                if (waitList[i] != (-1) && !visit_ended[i] && waitList[i] == distance - 1) {
+                    //std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
+                    index = i;
+                    distance = waitList[i] + 1;
+                    break;
+                }
+            }
+
+            if (index == (size_t)-1) {
+                for (size_t i = 0; i < vector_size; i++) {
+                    if (waitList[i] != (-1) && !visit_ended[i]) {
+                        //std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
+                        index = i;
+                        distance = waitList[i] + 1;
+                        break;
+                    }
+                }
+            }
+
+            if (index == (size_t)-1)
+                break;
+
+            bool existNull = false;
+            for (size_t i = 0; i < vector_size; i++)
+                if (waitList[i] == (-1))
+                    existNull = true;
+
+            if (!existNull)
+                break;
+        }
+
+        std::cout << std::endl;
+        for (size_t i = 0; i < vector_size; i++)
+            std::cout << waitList[i] << " ";
+
+        return waitList;
+    }
+
+    // Fecho transitivo Indireto
+    int* indirectTransitiveClosure(Vertex* vertex) {
+        int** matrix = getAdjMatrix();
+
+        size_t vector_size = vertices.size();
+        int* waitList = new int[vector_size];
+        bool* visit_ended = new bool[vector_size];
+
+        for (size_t i = 0; i < vector_size; i++)
+            waitList[i] = (-1);
+
+        for (size_t i = 0; i < vector_size; i++)
+            visit_ended[i] = false;
+
+        size_t index = indexOfVertex(vertex->id);
+        waitList[index] = 0;
+        int distance = 1;
+
+        while (true) {
+            for (size_t i = 0; i < vector_size; i++) {
+                if (matrix[i][index] == 1 && !visit_ended[i] && waitList[i] == (-1)) {
+                    waitList[i] = distance;
+                    //std::cout << "Vertice: " << getVertex(i)->id << " marcado com a distancia -> " << distance << std::endl;
+                }
+            }
+
+            visit_ended[index] = true;
+            index = -1;
+            for (size_t i = 0; i < vector_size; i++) {
+                if (waitList[i] != (-1) && !visit_ended[i] && waitList[i] == distance - 1) {
+                    //std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
+                    index = i;
+                    distance = waitList[i] + 1;
+                    break;
+                }
+            }
+
+            if (index == (size_t)-1) {
+                for (size_t i = 0; i < vector_size; i++) {
+                    if (waitList[i] != (-1) && !visit_ended[i]) {
+                        //std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
+                        index = i;
+                        distance = waitList[i] + 1;
+                        break;
+                    }
+                }
+            }
+
+            if (index == (size_t)-1)
+                break;
+
+            bool existNull = false;
+            for (size_t i = 0; i < vector_size; i++)
+                if (waitList[i] == (-1))
+                    existNull = true;
+
+            if (!existNull)
+                break;
+        }
+
+        std::cout << std::endl;
+        for (size_t i = 0; i < vector_size; i++)
+            std::cout << waitList[i] << " ";
+
+        return waitList;
+    }
+
+    // Verifica se o grafo é Conexo
+    bool isConnectivity() {
+        int* direct = directTransitiveClosure(vertices[0]);
+        int* indirect = indirectTransitiveClosure(vertices[0]);
+
+        int counterDirect = 0;
+        int counterIndirect = 0;
+        for (size_t i = 0; i < vertices.size(); i++) {
+            if (direct[i] == (-1))
+                counterDirect++;
+            if (indirect[i] == (-1))
+                counterIndirect++;
+        }
+
+        if (counterDirect != counterIndirect)
+            return false;
+        else
+            return true;
+
     }
 
 };

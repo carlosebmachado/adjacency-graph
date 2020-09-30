@@ -23,14 +23,10 @@ SOURCES += \
     util.cpp
 
 HEADERS += \
-    BPS.h \
     BPS.hpp \
-    BPS/BPS.h \
     graph.hpp \
     graphfile.h \
     mainwindow.h \
-    plot.h \
-    util.h \
     util.hpp
 
 FORMS += \

@@ -20,7 +20,7 @@ std::vector<std::string> split(std::string str, char sc)
 
 std::string trim(std::string str)
 {
-    auto s = 0, c = 0;
+    size_t s = 0, c = 0;
     for (size_t i = 0; i < str.size(); i++)
     {
         if (str[i] != ' ')

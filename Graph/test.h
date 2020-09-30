@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Graph.h"
-#include "cmd.h"
+#include "parser.h"
 #include "util.h"
 
 void loadPrintTest(std::vector<Graph> graphs) {

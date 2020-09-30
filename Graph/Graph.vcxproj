@@ -176,7 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BPS.h" />
-    <ClInclude Include="cmd.h" />
+    <ClInclude Include="parser.h" />
     <ClInclude Include="graph.h" />
     <ClInclude Include="plot.h" />
     <ClInclude Include="test.h" />

@@ -2,7 +2,16 @@
 #define GRAPHFILE_H
 
 #include <QWidget>
+#include <QStandardItemModel>
+#include <QTreeWidgetItem>
 
+#include "QWidgetAction"
+#include "QMessageBox"
+
+#include <vector>
+
+#include "BPS.hpp"
+#include "util.hpp"
 #include "graph.hpp"
 
 namespace Ui {

@@ -4,14 +4,12 @@
 #include <vector>
 #include <string>
 
-const char* c_LANG = "lang";
 const char* c_ADD = "add";
 const char* c_REM = "rem";
 const char* c_SEL = "sel";
 const char* c_CLS = "cls";
 const char* c_LIST = "list";
 const char* c_EXIT = "exit";
-
 
 const char* c_GRAPH = "graph";
 const char* c_VERTEX = "vertex";
@@ -26,10 +24,9 @@ const char* c_HELP = "help";
 
 typedef short Command;
 
-enum CommandCodes {	
+enum CommandCodes {
 	e_NOCOMMAND,
 	e_ERROR,
-	e_LANG,
 	e_HELP,
 	e_CLS,
 	e_LIST,
@@ -50,7 +47,6 @@ enum CommandCodes {
 };
 
 const char* TOKENS[] = {
-	c_LANG,
 	c_ADD,
 	c_REM,
 	c_SEL,
@@ -100,7 +96,7 @@ std::vector<std::string> scanner(std::string line) {
 	return tokens;
 }
 
-Command parser(std::vector<std::string> &tokens) {
+Command parser(std::vector<std::string>& tokens) {
 	if (tokens.size() == 0) {
 		return e_NOCOMMAND;
 	}
@@ -140,10 +136,6 @@ Command parser(std::vector<std::string> &tokens) {
 		if (tokens[0]._Equal(c_DFS)) {
 			tokens.erase(tokens.begin());
 			return e_DFS;
-		}
-		if (tokens[0]._Equal(c_LANG)) {
-			tokens.erase(tokens.begin());
-			return e_LANG;
 		}
 	}
 	if (tokens.size() > 2) {
