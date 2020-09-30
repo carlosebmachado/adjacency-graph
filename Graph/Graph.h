@@ -68,7 +68,7 @@ public:
 		this->vertices = vertices;
 	}
 
-	// Adiciona um novo vértice
+	// Adiciona um novo vï¿½rtice
 	bool addVertex(Vertex* vertex) {
 		if (not existis(vertex->id)) {
 			vertices.push_back(vertex);
@@ -77,7 +77,7 @@ public:
 		return false;
 	}
 
-	// Remove um vértice à partir do id
+	// Remove um vï¿½rtice ï¿½ partir do id
 	bool removeVertex(std::string id) {
 		for (auto i = 0; i < vertices.size(); i++) {
 			if (vertices[i]->id._Equal(id)) {
@@ -88,14 +88,14 @@ public:
 		return false;
 	}
 
-	// Verifica se um vértice existe
+	// Verifica se um vï¿½rtice existe
 	bool existis(std::string id) {
 		for (auto v : vertices)
 			if (v->id._Equal(id)) return true;
 		return false;
 	}
 
-	// Adiciona uma nova aresta à partir do id do vértice 1 e do vértice 2
+	// Adiciona uma nova aresta ï¿½ partir do id do vï¿½rtice 1 e do vï¿½rtice 2
 	bool addEdge(std::string id1, std::string id2) {
 		for (auto v1 : vertices) {
 			if (v1->id._Equal(id1)) {
@@ -110,7 +110,7 @@ public:
 		return false;
 	}
 
-	// Remove uma aresta à partir do id do vértice 1 e do vértice 2
+	// Remove uma aresta ï¿½ partir do id do vï¿½rtice 1 e do vï¿½rtice 2
 	bool removeEdge(std::string id1, std::string id2) {
 		for (auto v1 : vertices) {
 			if (v1->id._Equal(id1)) {
@@ -175,7 +175,7 @@ public:
 		return matrix;
 	}
 
-	// Verifica se os vertice v1 é vizinho de v2, respeitando as direçõeos
+	// Verifica se os vertice v1 ï¿½ vizinho de v2, respeitando as direï¿½ï¿½eos
 	bool isNeighborhood(Vertex* v1, Vertex* v2) {
 		for (int i = 0; i < v1->adjacencies.size(); i++)
 			if (v1->adjacencies[i]->id == v2->id)
@@ -183,20 +183,20 @@ public:
 		return false;
 	}
 
-	// Realiza a marcação do vertice como visitado
+	// Realiza a marcaï¿½ï¿½o do vertice como visitado
 	void visiting(bool*& visited, Vertex* vertex) {
 		std::cout << "Visitando vertice " << vertex->id << std::endl;
 		visited[indexOfVertex(vertex->id)] = true;
 	}
 
-	// Realiza a marcaçãoo do vertice como visitado e adiciona a lista
+	// Realiza a marcaï¿½ï¿½oo do vertice como visitado e adiciona a lista
 	void visiting(bool*& visited, std::list<Vertex*>& queue, Vertex* vertex) {
 		std::cout << "Visitando vertice " << vertex->id << std::endl;
 		visited[indexOfVertex(vertex->id)] = true;
 		queue.push_back(vertex);
 	}
 
-	// Realiza a marcação do vertice como visitado e adiciona a pilha
+	// Realiza a marcaï¿½ï¿½o do vertice como visitado e adiciona a pilha
 	void visiting(bool*& visited, std::stack<Vertex*>& stack, Vertex*& vertex, Vertex* oldvertex) {
 		stack.push(oldvertex);
 		vertex = stack.top();
@@ -214,7 +214,7 @@ public:
 			visited[i] = false;
 
 		while (true) {
-			// Verifica se o vertice atual já foi visitado
+			// Verifica se o vertice atual jï¿½ foi visitado
 			if (!visited[indexOfVertex(vertex->id)]) {
 				std::cout << "Visitando vertice " << vertex->id << std::endl;
 				visited[indexOfVertex(vertex->id)] = true;
@@ -229,8 +229,8 @@ public:
 				for (auto j = 0; j < vector_size; j++) {
 					/* 
 					   Procura na lista de adjacencias do vertice atual o vertice correspodente
-					   "i" = posição atual na lista de adjacencias 
-					   "j" = posição atual na lista de vertices 
+					   "i" = posiï¿½ï¿½o atual na lista de adjacencias 
+					   "j" = posiï¿½ï¿½o atual na lista de vertices 
 					*/
 					if(newI->adjacencies[i]->id._Equal(vertices[j]->id)) {
 						if (!visited[j]) {
@@ -253,7 +253,7 @@ public:
 				if (stack.empty()) {
 					bool emptyVector = true;
 
-					// Devido a pilha estar vazia, irá procurar um novo vertice que ainda não foi visitado
+					// Devido a pilha estar vazia, irï¿½ procurar um novo vertice que ainda nï¿½o foi visitado
 					for (auto j = 0; j < vector_size; j++) {
 						if (!visited[j]) {
 							stack.push(getVertex(j));
@@ -280,7 +280,7 @@ public:
 		for (int i = 0; i < vector_size; i++)
 			visited[i] = false;
 
-		// Realiza a marcação do primeiro vertice como visitado
+		// Realiza a marcaï¿½ï¿½o do primeiro vertice como visitado
 		visiting(visited, stack, vertex, vertex);
 
 		while (true) {
@@ -306,7 +306,7 @@ public:
 				if (stack.empty()) {
 					bool emptyVector = true;
 
-					// Devido a pilha estar vazia, irá procurar um novo vertice que ainda não foi visitado
+					// Devido a pilha estar vazia, irï¿½ procurar um novo vertice que ainda nï¿½o foi visitado
 					for (auto j = 0; j < vector_size; j++) {
 						if (!visited[j]) {
 							visiting(visited, stack, vertex, getVertex(j));	
@@ -349,7 +349,7 @@ public:
 						if (!visitados[j]) {
 							/*
 								Marca o vertice atual da lista de ajcacencia como visitado
-								Realizando atualização de queue e vetor de visitados
+								Realizando atualizaï¿½ï¿½o de queue e vetor de visitados
 							*/
 							visiting(visitados, queue, vertices[j]);							
 						}
@@ -358,7 +358,7 @@ public:
 				}
 			}
 
-			// Verifica se a queue esta vazia, para atualizar a nova posição
+			// Verifica se a queue esta vazia, para atualizar a nova posiï¿½ï¿½o
 			if (!queue.empty()) {
 				vertex = queue.front();
 				queue.pop_front();
@@ -366,12 +366,12 @@ public:
 			else {
 				bool emptyVector = true;
 
-				// Devido a queue estar vazia, irá procurar um novo vertice que ainda não foi visitado
+				// Devido a queue estar vazia, irï¿½ procurar um novo vertice que ainda nï¿½o foi visitado
 				for (auto j = 0; j < vector_size; j++) {
 					if (!visitados[j]) {
 						/*
 							Reinicia a queue para um novo vertice
-							Necessário marcar as flags e adicionar/removoer da queue
+							Necessï¿½rio marcar as flags e adicionar/removoer da queue
 						*/
 						queue.push_back(getVertex(j));
 						emptyVector = false;
@@ -390,4 +390,158 @@ public:
 		}
 	}
 
+	// Fecho transitivo Direto
+	int* directTransitiveClosure(Vertex* vertex) {
+		int** matrix = getMatrix();
+
+		int vector_size = vertices.size();
+		int* waitList = new int[vector_size];
+		bool* visit_ended = new bool[vector_size];
+
+		for (int i = 0; i < vector_size; i++)
+			waitList[i] = (-1);
+
+		for (int i = 0; i < vector_size; i++)
+			visit_ended[i] = false;
+
+		int index = indexOfVertex(vertex->id);
+		waitList[index] = 0;
+		int distance = 1;
+
+		while (true) {
+			for (int j = 0; j < vector_size; j++) {
+				if (matrix[index][j] == 1 && !visit_ended[j] && waitList[j] == (-1)) {
+					waitList[j] = distance;
+					//std::cout << "Vertice: " << getVertex(j)->id << " marcado com a distancia -> " << distance << std::endl;
+				}
+			}		
+
+			visit_ended[index] = true;
+			index = -1;
+			for (int i = 0; i < vector_size; i++) {
+				if (waitList[i] != (-1) && !visit_ended[i] && waitList[i] == distance - 1) {
+					//std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
+					index = i;
+					distance = waitList[i] + 1;
+					break;
+				}
+			}
+
+			if (index == -1) {
+				for (int i = 0; i < vector_size; i++) {
+					if (waitList[i] != (-1) && !visit_ended[i]) {
+						//std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
+						index = i;
+						distance = waitList[i] + 1;
+						break;
+					}
+				}
+			}
+
+			if (index == -1)
+				break;
+
+			bool existNull = false;
+			for (int i = 0; i < vector_size; i++)
+				if (waitList[i] == (-1))
+					existNull = true;
+
+			if (!existNull)
+				break;
+		}
+
+		std::cout << std::endl;
+		for (int i = 0; i < vector_size; i++)
+			std::cout << waitList[i] << " ";
+
+		return waitList;
+	}
+
+	// Fecho transitivo Indireto
+	int* indirectTransitiveClosure(Vertex* vertex) {
+		int** matrix = getMatrix();
+
+		int vector_size = vertices.size();
+		int* waitList = new int[vector_size];
+		bool* visit_ended = new bool[vector_size];
+
+		for (int i = 0; i < vector_size; i++)
+			waitList[i] = (-1);
+
+		for (int i = 0; i < vector_size; i++)
+			visit_ended[i] = false;
+
+		int index = indexOfVertex(vertex->id);
+		waitList[index] = 0;
+		int distance = 1;
+
+		while (true) {
+			for (int i = 0; i < vector_size; i++) {
+				if (matrix[i][index] == 1 && !visit_ended[i] && waitList[i] == (-1)) {
+					waitList[i] = distance;
+					//std::cout << "Vertice: " << getVertex(i)->id << " marcado com a distancia -> " << distance << std::endl;
+				}
+			}
+
+			visit_ended[index] = true;
+			index = -1;
+			for (int i = 0; i < vector_size; i++) {
+				if (waitList[i] != (-1) && !visit_ended[i] && waitList[i] == distance - 1) {
+					//std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
+					index = i;
+					distance = waitList[i] + 1;
+					break;
+				}
+			}
+
+			if (index == -1) {
+				for (int i = 0; i < vector_size; i++) {
+					if (waitList[i] != (-1) && !visit_ended[i]) {
+						//std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
+						index = i;
+						distance = waitList[i] + 1;
+						break;
+					}
+				}
+			}
+
+			if (index == -1)
+				break;
+
+			bool existNull = false;
+			for (int i = 0; i < vector_size; i++)
+				if (waitList[i] == (-1))
+					existNull = true;
+
+			if (!existNull)
+				break;
+		}
+
+		std::cout << std::endl;
+		for (int i = 0; i < vector_size; i++)
+			std::cout << waitList[i] << " ";
+
+		return waitList;
+	}
+	
+	// Verifica se o grafo ï¿½ Conexo
+	bool isConnectivity() {
+		int* direct = directTransitiveClosure(vertices[0]);
+		int* indirect = indirectTransitiveClosure(vertices[0]);
+
+		int counterDirect = 0;
+		int counterIndirect = 0;
+		for (int i = 0; i < vertices.size(); i++) {
+			if (direct[i] == (-1))
+				counterDirect++;
+			if (indirect[i] == (-1))
+				counterIndirect++;
+		}
+
+		if (counterDirect != counterIndirect)
+			return false;
+		else
+			return true;
+
+	}
 };
