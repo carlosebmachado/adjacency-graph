@@ -398,6 +398,7 @@ public:
 		int* waitList = new int[vector_size];
 		bool* visit_ended = new bool[vector_size];
 
+		// Cria vetor denominando todos vertices como não encontrados
 		for (int i = 0; i < vector_size; i++)
 			waitList[i] = (-1);
 
@@ -409,28 +410,29 @@ public:
 		int distance = 1;
 
 		while (true) {
+			// Percore para o proximo vertice adjacente e marca a distancia
 			for (int j = 0; j < vector_size; j++) {
 				if (matrix[index][j] == 1 && !visit_ended[j] && waitList[j] == (-1)) {
 					waitList[j] = distance;
-					//std::cout << "Vertice: " << getVertex(j)->id << " marcado com a distancia -> " << distance << std::endl;
 				}
 			}		
 
 			visit_ended[index] = true;
 			index = -1;
+
+			// Procura o novo indice de acordo com a distancia
 			for (int i = 0; i < vector_size; i++) {
 				if (waitList[i] != (-1) && !visit_ended[i] && waitList[i] == distance - 1) {
-					//std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
 					index = i;
 					distance = waitList[i] + 1;
 					break;
 				}
 			}
 
+			// Caso não seja encontrado anteriormente, procura nos outros grafos de mesma distancia
 			if (index == -1) {
 				for (int i = 0; i < vector_size; i++) {
 					if (waitList[i] != (-1) && !visit_ended[i]) {
-						//std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
 						index = i;
 						distance = waitList[i] + 1;
 						break;
@@ -438,6 +440,7 @@ public:
 				}
 			}
 
+			// Caso não seja encontrado novamente, finaliza a busca
 			if (index == -1)
 				break;
 
@@ -449,10 +452,6 @@ public:
 			if (!existNull)
 				break;
 		}
-
-		std::cout << std::endl;
-		for (int i = 0; i < vector_size; i++)
-			std::cout << waitList[i] << " ";
 
 		return waitList;
 	}
@@ -465,6 +464,7 @@ public:
 		int* waitList = new int[vector_size];
 		bool* visit_ended = new bool[vector_size];
 
+		// Cria vetor denominando todos vertices como não encontrados
 		for (int i = 0; i < vector_size; i++)
 			waitList[i] = (-1);
 
@@ -476,28 +476,29 @@ public:
 		int distance = 1;
 
 		while (true) {
+			// Percore para o proximo vertice adjacente e marca a distancia
 			for (int i = 0; i < vector_size; i++) {
 				if (matrix[i][index] == 1 && !visit_ended[i] && waitList[i] == (-1)) {
 					waitList[i] = distance;
-					//std::cout << "Vertice: " << getVertex(i)->id << " marcado com a distancia -> " << distance << std::endl;
 				}
 			}
 
 			visit_ended[index] = true;
 			index = -1;
+
+			// Procura o novo indice de acordo com a distancia			
 			for (int i = 0; i < vector_size; i++) {
 				if (waitList[i] != (-1) && !visit_ended[i] && waitList[i] == distance - 1) {
-					//std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
 					index = i;
 					distance = waitList[i] + 1;
 					break;
 				}
 			}
 
+			// Caso não seja encontrado anteriormente, procura nos outros grafos de mesma distancia
 			if (index == -1) {
 				for (int i = 0; i < vector_size; i++) {
 					if (waitList[i] != (-1) && !visit_ended[i]) {
-						//std::cout << waitList[i] << std::endl << distance << std::endl << visit_ended[i] << std::endl << i << std::endl;
 						index = i;
 						distance = waitList[i] + 1;
 						break;
@@ -505,6 +506,7 @@ public:
 				}
 			}
 
+			// Caso não seja encontrado novamente, finaliza a busca
 			if (index == -1)
 				break;
 
@@ -516,10 +518,6 @@ public:
 			if (!existNull)
 				break;
 		}
-
-		std::cout << std::endl;
-		for (int i = 0; i < vector_size; i++)
-			std::cout << waitList[i] << " ";
 
 		return waitList;
 	}
