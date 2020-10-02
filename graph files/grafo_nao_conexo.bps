@@ -5,4 +5,3 @@
     <data>vertices:"a,b,c,d,e,f,g"</>
     <data>edges:"a,b;a,d;b,c;c,g;d,e;d,f;e,a;e,b;e,c;e,g;f,c;g,b;g,f"</>
 </>
-

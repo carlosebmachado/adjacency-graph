@@ -251,7 +251,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>Dirigido?</string>
+           <string>Não dirigido?</string>
           </property>
          </widget>
         </widget>

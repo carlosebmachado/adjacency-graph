@@ -303,6 +303,8 @@ public:
     std::string DFS(Vertex* vertex) {
         std::string dfsString = "";
 
+        if(!existis(vertex->id)) return "";
+
         std::stack<Vertex*> stack;
         size_t vector_size = vertices.size();
         bool* visited = new bool[vector_size];
@@ -373,6 +375,8 @@ public:
     std::string BFS(Vertex* vertex) {
         std::string bfsString = "";
 
+        if(!existis(vertex->id)) return "";
+
         std::list<Vertex*> queue;
         size_t vector_size = vertices.size();
         bool* visitados = new bool[vector_size];
@@ -389,8 +393,7 @@ public:
             for (size_t i = 0; i < newI->adjacencies.size(); i++) {
                 for (size_t j = 0; j < vector_size; j++) {
 
-                    if (newI->adjacencies[i]->id.compare(vertices[j]->id))
-                    {
+                    if (newI->adjacencies[i]->id.compare(vertices[j]->id)) {
                         if (!visitados[j]) {
                             /*
                                 Marca o vertice atual da lista de ajcacencia como visitado
