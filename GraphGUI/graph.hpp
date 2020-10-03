@@ -301,9 +301,9 @@ public:
 
     // DFS baseado na ordem de entrada
     std::string DFS(Vertex* vertex) {
-        std::string dfsString = "";
-
         if(!existis(vertex->id)) return "";
+
+        std::string cstr = "";
 
         std::stack<Vertex*> stack;
         size_t vector_size = vertices.size();
@@ -315,7 +315,7 @@ public:
         while (true) {
             // Verifica se o vertice atual j� foi visitado
             if (!visited[indexOfVertex(vertex->id)]) {
-                dfsString += "Vértice -> " + vertex->id + "\n";
+                cstr += "Vértice -> " + vertex->id + "\n";
                 visited[indexOfVertex(vertex->id)] = true;
                 stack.push(vertex);
             }
@@ -331,7 +331,7 @@ public:
                        "i" = posi��o atual na lista de adjacencias
                        "j" = posi��o atual na lista de vertices
                     */
-                    if(newI->adjacencies[i]->id.compare(vertices[j]->id)) {
+                    if(newI->adjacencies[i]->id._Equal(vertices[j]->id)) {
                         if (!visited[j]) {
                             newV = vertices[j];
                             find = true;
@@ -368,14 +368,14 @@ public:
             }
         }
 
-        return dfsString;
+        return cstr;
     }
 
     // BFS baseadp na ordem de entrada
     std::string BFS(Vertex* vertex) {
-        std::string bfsString = "";
-
         if(!existis(vertex->id)) return "";
+
+        std::string cstr = "";
 
         std::list<Vertex*> queue;
         size_t vector_size = vertices.size();
@@ -385,7 +385,7 @@ public:
             visitados[i] = false;
 
         // Marca o vertex inicial como visitado
-        bfsString += visiting(visitados, vertex);
+        cstr += visiting(visitados, vertex);
 
         while (true) {
             Vertex* newI = getVertex(vertex->id);
@@ -393,13 +393,14 @@ public:
             for (size_t i = 0; i < newI->adjacencies.size(); i++) {
                 for (size_t j = 0; j < vector_size; j++) {
 
-                    if (newI->adjacencies[i]->id.compare(vertices[j]->id)) {
+                    if (newI->adjacencies[i]->id._Equal(vertices[j]->id))
+                    {
                         if (!visitados[j]) {
                             /*
                                 Marca o vertice atual da lista de ajcacencia como visitado
                                 Realizando atualiza��o de queue e vetor de visitados
                             */
-                            bfsString += visiting(visitados, queue, vertices[j]);
+                            cstr += visiting(visitados, queue, vertices[j]);
                         }
                     }
 
@@ -427,7 +428,7 @@ public:
                         vertex = queue.front();
                         queue.pop_back();
 
-                        bfsString += visiting(visitados, vertex);
+                        cstr += visiting(visitados, vertex);
                         break;
                     }
                 }
@@ -437,7 +438,7 @@ public:
             }
         }
 
-        return bfsString;
+        return cstr;
     }
 
     // Fecho transitivo Direto
