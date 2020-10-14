@@ -104,6 +104,16 @@ void GraphFile::on_btnRemoveEdge_clicked()
     ui->txtEdges->setFocus();
 }
 
+void GraphFile::on_btnDijkstra_clicked()
+{
+    QString id = ui->txtSearchID->text();
+    if(id == ""){
+        QMessageBox::warning(this, "Erro", "ID não pode ser vazio.");
+        return;
+    }
+    QMessageBox::information(this, "Dijkstra", QString(graph.dijkstra(new Vertex(id.toStdString())).c_str()));
+}
+
 void GraphFile::on_btnDFS_clicked()
 {
     QString id = ui->txtSearchID->text();

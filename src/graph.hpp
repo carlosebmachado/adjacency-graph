@@ -8,6 +8,23 @@
 #include <list>
 #include <queue>
 
+class Vertex;
+
+class Edge {
+public:
+    Vertex* adjacency;
+    int weight;
+
+    Edge(Vertex* adjacency){
+        this->adjacency = adjacency;
+    }
+
+    Edge(Vertex* adjacency, int weight){
+        this->adjacency = adjacency;
+        this->weight = weight;
+    }
+};
+
 class Vertex {
 public:
     std::string id;
@@ -257,6 +274,24 @@ public:
         }
 
         return graphs;
+    }
+
+    std::string dijkstra(Vertex* vertex){
+        std::string data = "";
+        auto dist = std::vector<int>();
+        auto prev = std::vector<std::string>();
+        for(size_t i = 0; i < vertices.size(); i++){
+            if(vertex->id == vertices[i]->id){
+                dist.push_back(0);
+            }else{
+                dist.push_back(-1);
+            }
+            prev.push_back("");
+        }
+
+
+
+        return data;
     }
 
     // ---------------- HERIKC ↓

@@ -1,0 +1,8 @@
+# BPS File
+
+<section>
+    <name>"subgrafo_dir.bps"</>
+    <data>vertices:"a,a,b,c,e,f,f,g,h,i"</>
+    <data>edges:"a,e;a,f;b,g;c,h;e,i;f,i;f,e;g,a;h,d;i,a"</>
+</>
+

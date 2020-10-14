@@ -46,6 +46,8 @@ private slots:
 
     void on_btnConnected_clicked();
 
+    void on_btnDijkstra_clicked();
+
 private:
     Ui::GraphFile *ui;
 };
