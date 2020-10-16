@@ -1,0 +1,8 @@
+# BPS File
+
+<section>
+    <name>"test_1.bps"</>
+    <data>vertices:"a,b,c,d,e,f,g,h,i"</>
+    <data>edges:"a,e,1/a,f,1/b,g,1/c,h,1/e,i,1/f,i,1/f,e,1/g,a,1/h,d,1/i,a,1"</>
+</>
+

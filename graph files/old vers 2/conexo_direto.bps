@@ -1,0 +1,7 @@
+# BPS File
+
+<section>
+    <name>"conexo_direto.bps"</>
+    <data>vertices:"a,b,c,d,e,f,g,h,i"</>
+    <data>edges:"a,b/a,d/b,a/b,e/d,a/d,f/e,b/e,c/e,i/e,g/c,e/c,h/f,d/f,g/g,f/g,e/h,c/h,i/i,e/i,h"</>
+</>

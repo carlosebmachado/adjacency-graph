@@ -31,7 +31,6 @@ void GraphFile::on_btnAddVertex_clicked()
         graph.addVertex(new Vertex(id));
     }
 
-    updateAdjacencyVector();
     updateAdjacencyMatrix();
 
     ui->txtVertexID->setText("");
@@ -51,7 +50,6 @@ void GraphFile::on_btnRemoveVertex_clicked()
         graph.removeVertex(id);
     }
 
-    updateAdjacencyVector();
     updateAdjacencyMatrix();
 
     ui->txtVertexID->setText("");
@@ -67,14 +65,24 @@ void GraphFile::on_btnAddEdge_clicked()
         QMessageBox::warning(this, "Erro", "ID não pode ser vazio.");
     }
 
-    auto cons = split(constr.toStdString(), ';');
+    auto cons = split(constr.toStdString(), '/');
     for(auto con : cons){
         auto ids = split(con, ',');
-        graph.addEdge(ids[0], ids[1]);
-        if(dir) graph.addEdge(ids[1], ids[0]);
+        if(ui->cbWeight->isChecked()){
+            if(ids.size() < 3){
+                QMessageBox::warning(this, "Erro", "Erro ao fazer o parser dos IDs. Verifique a sintaxe.");
+            }
+            graph.addEdge(ids[0], ids[1], atoi(ids[2].c_str()));
+            if(dir) graph.addEdge(ids[1], ids[0], atoi(ids[2].c_str()));
+        } else {
+            if(ids.size() < 2){
+                QMessageBox::warning(this, "Erro", "Erro ao fazer o parser dos IDs. Verifique a sintaxe.");
+            }
+            graph.addEdge(ids[0], ids[1], 1);
+            if(dir) graph.addEdge(ids[1], ids[0], 1);
+        }
     }
 
-    updateAdjacencyVector();
     updateAdjacencyMatrix();
 
     ui->txtEdges->setText("");
@@ -90,14 +98,16 @@ void GraphFile::on_btnRemoveEdge_clicked()
         QMessageBox::warning(this, "Erro", "ID não pode ser vazio.");
     }
 
-    auto cons = split(constr.toStdString(), ';');
+    auto cons = split(constr.toStdString(), '/');
     for(auto con : cons){
         auto ids = split(con, ',');
+        if(ids.size() < 2){
+            QMessageBox::warning(this, "Erro", "Erro ao fazer o parser dos IDs. Verifique a sintaxe.");
+        }
         graph.removeEdge(ids[0], ids[1]);
         if(dir) graph.removeEdge(ids[1], ids[0]);
     }
 
-    updateAdjacencyVector();
     updateAdjacencyMatrix();
 
     ui->txtEdges->setText("");
@@ -162,16 +172,18 @@ void GraphFile::on_btnConnected_clicked()
     }
 }
 
-
-// interface update
-void GraphFile::updateAdjacencyVector() {
-    ui->lblVector->setText(graph.getStrAdjVector().c_str());
+void GraphFile::on_btnVector_clicked()
+{
+    QMessageBox::information(this, "Vetor de adjacência", graph.getStrAdjVector().c_str());
 }
 
+
+// interface update
 void GraphFile::updateAdjacencyMatrix() {
     ui->lblMatrix->setText(graph.getStrAdjMatrix().c_str());
 }
 
+// percistence
 void GraphFile::open(std::string path){
     // carrega arquivo bps do disco p/ memoria
     BPS::File* file = BPS::read(path);
@@ -191,20 +203,26 @@ void GraphFile::open(std::string path){
         std::string edges = edata->getValue();
 
         // cria os vertices
-        auto ids = split(vertices, ',');
-        for(auto id : ids){
-            graph.addVertex(new Vertex(id));
+        if(vertices != ""){
+            auto ids = split(vertices, ',');
+            for(auto id : ids){
+                graph.addVertex(new Vertex(id));
+            }
         }
 
         // cria as conexoes
-        auto cons = split(edges, ';');
-        for(auto con : cons){
-            auto ids = split(con, ',');
-            graph.addEdge(ids[0], ids[1]);
+        if(edges != ""){
+            auto cons = split(edges, '/');
+            for(auto con : cons){
+                auto ids = split(con, ',');
+                if(ids.size() < 3){
+                    QMessageBox::warning(this, "Erro", "Erro ao carregar arquivo. Arquivo corrompido.");
+                }
+                graph.addEdge(ids[0], ids[1], atoi(ids[2].c_str()));
+            }
         }
     }
 
-    updateAdjacencyVector();
     updateAdjacencyMatrix();
 }
 
@@ -217,13 +235,12 @@ void GraphFile::save(std::string path){
     std::string edges = "";
     // loop para pegar vertices e conexoes
     for(size_t i = 0; i < graph.vertices.size(); i++){
+        // add o vertice
+        vertices += graph.vertices[i]->id;
+        if(i < graph.vertices.size() - 1) vertices += ",";
         for(size_t j = 0; j < graph.vertices[i]->adjacencies.size(); j++){
-            // add o vertice
-            vertices += graph.vertices[i]->id;
-            if(i < graph.vertices.size() - 1) vertices += ",";
             // add a conexao
-            edges += graph.vertices[i]->id + "," + graph.vertices[i]->adjacencies[j]->id;
-            edges += ";";
+            edges += graph.vertices[i]->id + "," + graph.vertices[i]->adjacencies[j].adjacency->id + "," + std::to_string(graph.vertices[i]->adjacencies[j].weight) + "/";
         }
     }
     edges = edges.substr(0, edges.size() - 1);

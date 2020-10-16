@@ -240,6 +240,7 @@
      <string>Ajuda</string>
     </property>
     <addaction name="actionShowHelp"/>
+    <addaction name="actionAboutQT"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuAjuda"/>
@@ -275,6 +276,11 @@
   <action name="actionShowHelp">
    <property name="text">
     <string>Mostrar ajuda</string>
+   </property>
+  </action>
+  <action name="actionAboutQT">
+   <property name="text">
+    <string>Sobre o QT</string>
    </property>
   </action>
  </widget>

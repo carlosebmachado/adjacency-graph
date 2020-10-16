@@ -35,7 +35,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>312</width>
+             <width>590</width>
              <height>429</height>
             </rect>
            </property>
@@ -63,59 +63,19 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox_2">
-       <property name="title">
-        <string>Vetor</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="QScrollArea" name="scrollArea_2">
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents_2">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>311</width>
-             <height>429</height>
-            </rect>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_5">
-            <item row="0" column="0">
-             <widget class="QLabel" name="lblVector">
-              <property name="font">
-               <font>
-                <family>Consolas</family>
-               </font>
-              </property>
-              <property name="text">
-               <string>[] -&gt;</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QGroupBox" name="groupBox_3">
          <property name="minimumSize">
           <size>
-           <width>235</width>
-           <height>100</height>
+           <width>0</width>
+           <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>235</width>
-           <height>100</height>
+           <width>300</width>
+           <height>70</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -127,9 +87,9 @@
          <widget class="QPushButton" name="btnAddVertex">
           <property name="geometry">
            <rect>
-            <x>70</x>
-            <y>70</y>
-            <width>75</width>
+            <x>170</x>
+            <y>40</y>
+            <width>61</width>
             <height>23</height>
            </rect>
           </property>
@@ -140,9 +100,9 @@
          <widget class="QPushButton" name="btnRemoveVertex">
           <property name="geometry">
            <rect>
-            <x>150</x>
-            <y>70</y>
-            <width>75</width>
+            <x>234</x>
+            <y>40</y>
+            <width>61</width>
             <height>23</height>
            </rect>
           </property>
@@ -153,9 +113,9 @@
          <widget class="QLineEdit" name="txtVertexID">
           <property name="geometry">
            <rect>
-            <x>14</x>
+            <x>10</x>
             <y>40</y>
-            <width>211</width>
+            <width>151</width>
             <height>20</height>
            </rect>
           </property>
@@ -179,14 +139,14 @@
         <widget class="QGroupBox" name="groupBox_4">
          <property name="minimumSize">
           <size>
-           <width>235</width>
-           <height>110</height>
+           <width>0</width>
+           <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>235</width>
-           <height>110</height>
+           <width>300</width>
+           <height>90</height>
           </size>
          </property>
          <property name="title">
@@ -195,9 +155,9 @@
          <widget class="QPushButton" name="btnRemoveEdge">
           <property name="geometry">
            <rect>
-            <x>150</x>
-            <y>80</y>
-            <width>75</width>
+            <x>234</x>
+            <y>40</y>
+            <width>61</width>
             <height>23</height>
            </rect>
           </property>
@@ -210,7 +170,7 @@
            <rect>
             <x>10</x>
             <y>40</y>
-            <width>215</width>
+            <width>151</width>
             <height>20</height>
            </rect>
           </property>
@@ -218,9 +178,9 @@
          <widget class="QPushButton" name="btnAddEdge">
           <property name="geometry">
            <rect>
-            <x>70</x>
-            <y>80</y>
-            <width>75</width>
+            <x>170</x>
+            <y>40</y>
+            <width>61</width>
             <height>23</height>
            </rect>
           </property>
@@ -254,99 +214,151 @@
            <string>Não dirigido?</string>
           </property>
          </widget>
+         <widget class="QCheckBox" name="cbWeight">
+          <property name="geometry">
+           <rect>
+            <x>100</x>
+            <y>60</y>
+            <width>101</width>
+            <height>19</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Informar pesos</string>
+          </property>
+         </widget>
         </widget>
        </item>
        <item>
         <widget class="QGroupBox" name="groupBox_5">
          <property name="minimumSize">
           <size>
-           <width>235</width>
+           <width>300</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>235</width>
+           <width>300</width>
            <height>16777215</height>
           </size>
          </property>
          <property name="title">
           <string>Outros</string>
          </property>
-         <widget class="QPushButton" name="btnDFS">
+         <widget class="QGroupBox" name="groupBox_6">
           <property name="geometry">
            <rect>
-            <x>140</x>
-            <y>30</y>
-            <width>41</width>
-            <height>21</height>
+            <x>150</x>
+            <y>20</y>
+            <width>141</width>
+            <height>161</height>
            </rect>
           </property>
-          <property name="text">
-           <string>DFS</string>
+          <property name="title">
+           <string/>
           </property>
+          <widget class="QPushButton" name="btnVector">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>40</y>
+             <width>121</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Exibir vetor</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btnConnected">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>121</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Verificar se é conexo...</string>
+           </property>
+          </widget>
          </widget>
-         <widget class="QPushButton" name="btnBFS">
-          <property name="geometry">
-           <rect>
-            <x>185</x>
-            <y>30</y>
-            <width>41</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>BFS</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="lblVector_4">
+         <widget class="QGroupBox" name="groupBox_2">
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>30</y>
-            <width>21</width>
-            <height>16</height>
+            <y>20</y>
+            <width>131</width>
+            <height>161</height>
            </rect>
           </property>
-          <property name="text">
-           <string>ID</string>
+          <property name="title">
+           <string/>
           </property>
-         </widget>
-         <widget class="QLineEdit" name="txtSearchID">
-          <property name="geometry">
-           <rect>
-            <x>30</x>
-            <y>30</y>
-            <width>41</width>
-            <height>20</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="btnConnected">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>60</y>
-            <width>215</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Verificar se é conexo...</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="btnDijkstra">
-          <property name="geometry">
-           <rect>
-            <x>80</x>
-            <y>30</y>
-            <width>55</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Dijkstra</string>
-          </property>
+          <widget class="QPushButton" name="btnDFS">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>70</y>
+             <width>111</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>DFS</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="lblVector_4">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>21</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btnDijkstra">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>40</y>
+             <width>111</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Dijkstra</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="txtSearchID">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>10</y>
+             <width>91</width>
+             <height>20</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btnBFS">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>100</y>
+             <width>111</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>BFS</string>
+           </property>
+          </widget>
          </widget>
         </widget>
        </item>
@@ -364,12 +376,7 @@
   <tabstop>cbDirection</tabstop>
   <tabstop>btnAddEdge</tabstop>
   <tabstop>btnRemoveEdge</tabstop>
-  <tabstop>txtSearchID</tabstop>
-  <tabstop>btnDFS</tabstop>
-  <tabstop>btnBFS</tabstop>
-  <tabstop>btnConnected</tabstop>
   <tabstop>scrollArea</tabstop>
-  <tabstop>scrollArea_2</tabstop>
  </tabstops>
  <resources/>
  <connections/>

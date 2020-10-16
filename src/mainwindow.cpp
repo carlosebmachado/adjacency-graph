@@ -30,8 +30,8 @@ void MainWindow::on_actionShowHelp_triggered()
                              "Você pode adicionar uma ou mais arestas de cada vez. Por exemplo, caso queira adicionar "
                              "apenas uma você pode digitar apenas os IDs dos vértices separados por vírgula "
                              "(neste caso, os IDs são '1' e '2'). Ex.: 1,2\n"
-                             "Para adicionar multiplas arestas, você irá separar cada uma delas por ';'. Ex.: "
-                             "1,2;2,3;2,4;1,4\n"
+                             "Para adicionar multiplas arestas, você irá separar cada uma delas por '/'. Ex.: "
+                             "1,2/2,3/2,4/1,4\n"
                              "Caso você selecione a opção direcional, as conexões serão automaticamente direcionadas.");
 }
 
@@ -106,43 +106,7 @@ void MainWindow::on_actionExit_triggered()
     QApplication::quit();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void MainWindow::on_actionAboutQT_triggered()
+{
+    QMessageBox::aboutQt(this, "Sobre o QT");
+}

@@ -1,0 +1,8 @@
+# BPS File
+
+<section>
+    <name>"aula_2.bps"</>
+    <data>vertices:"s,u,v,x,y"</>
+    <data>edges:"s,u,10/s,x,5/u,v,1/u,x,3/v,y,6/x,u,2/x,v,9/x,y,2/y,s,7/y,v,4"</>
+</>
+

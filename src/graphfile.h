@@ -31,7 +31,6 @@ public:
     explicit GraphFile(QWidget *parent = nullptr);
     ~GraphFile();
 
-    void updateAdjacencyVector();
     void updateAdjacencyMatrix();
     void save(std::string);
     void open(std::string);
@@ -47,6 +46,8 @@ private slots:
     void on_btnConnected_clicked();
 
     void on_btnDijkstra_clicked();
+
+    void on_btnVector_clicked();
 
 private:
     Ui::GraphFile *ui;

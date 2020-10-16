@@ -8,6 +8,8 @@
 #include <list>
 #include <queue>
 
+#undef INFINITY
+#define INFINITY ULLONG_MAX
 class Vertex;
 
 class Edge {
@@ -29,34 +31,20 @@ class Vertex {
 public:
     std::string id;
     int x, y;
-    std::vector<Vertex*> adjacencies;
+    std::vector<Edge> adjacencies;
 
     Vertex(std::string id) {
         this->x = 0;
         this->y = 0;
         this->id = id;
-        adjacencies = std::vector<Vertex*>();
+        adjacencies = std::vector<Edge>();
     }
 
     Vertex(int x, int y, std::string id) {
         this->x = x;
         this->y = y;
         this->id = id;
-        adjacencies = std::vector<Vertex*>();
-    }
-
-    Vertex(std::string id, std::vector<Vertex*> adjacencies) {
-        this->x = 0;
-        this->y = 0;
-        this->id = id;
-        this->adjacencies = adjacencies;
-    }
-
-    Vertex(int x, int y, std::string id, std::vector<Vertex*> adjacencies) {
-        this->x = x;
-        this->y = y;
-        this->id = id;
-        this->adjacencies = adjacencies;
+        adjacencies = std::vector<Edge>();
     }
 };
 
@@ -107,13 +95,18 @@ public:
         return false;
     }
 
-    // adiciona uma nova aresta a partir do id do vertice 1 e do vertice 2
-    bool addEdge(std::string id1, std::string id2) {
+    // adiciona uma nova aresta a partir do id do vertice 1 e do vertice 2 e o peso
+    bool addEdge(std::string id1, std::string id2, int weight) {
         for (auto v1 : vertices) {
             if (v1->id == id1) {
+                for(auto adjs : v1->adjacencies){
+                    if (adjs.adjacency->id == id2) {
+                        return false;
+                    }
+                }
                 for (auto v2 : vertices) {
                     if (v2->id == id2) {
-                        v1->adjacencies.push_back(v2);
+                        v1->adjacencies.push_back(Edge(v2, weight));
                         return true;
                     }
                 }
@@ -127,7 +120,7 @@ public:
         for (auto v1 : vertices) {
             if (v1->id == id1) {
                 for (size_t v2 = 0; v2 < v1->adjacencies.size(); v2++) {
-                    if (v1->adjacencies[v2]->id == id2) {
+                    if (v1->adjacencies[v2].adjacency->id == id2) {
                         v1->adjacencies.erase(v1->adjacencies.begin() + v2);
                         return true;
                     }
@@ -196,7 +189,7 @@ public:
             adjVector.push_back(std::vector<std::string>());
             adjVector[adjVector.size() - 1].push_back("([ " + v->id + " ])");
             for (auto a : v->adjacencies) {
-                adjVector[adjVector.size() - 1].push_back(" -> [ " + a->id + " ]");
+                adjVector[adjVector.size() - 1].push_back(" -> [ " + a.adjacency->id + " ]");
             }
         }
 
@@ -221,8 +214,8 @@ public:
         for (size_t i = 0; i < vertices.size(); i++) {
             for (size_t j = 0; j < vertices.size(); j++) {
                 for (size_t vi = 0; vi < vertices[i]->adjacencies.size(); vi++) {
-                    if (vertices[i]->adjacencies[vi]->id == vertices[j]->id) {
-                        matrix[i][j] = 1;
+                    if (vertices[i]->adjacencies[vi].adjacency->id == vertices[j]->id) {
+                        matrix[i][j] = vertices[i]->adjacencies[vi].weight;
                     }
                 }
             }
@@ -246,6 +239,7 @@ public:
 
         if(!isConnectivity()){
             for(size_t i = 0; i < vertices.size(); i++){
+                // verifica se já pertence a um subgrafo
                 bool isInSet = false;
                 for(auto g : graphs){
                     for(auto v : g.vertices){
@@ -258,17 +252,22 @@ public:
                 }
                 if(isInSet) continue;
 
+                // cria um novo subgrafo
                 auto graph = Graph(std::to_string(i));
+                // faz o fecho transitivo direto e indireto
                 int* direct = directTransitiveClosure(vertices[i]);
                 int* indirect = indirectTransitiveClosure(vertices[i]);
 
+                // os vértices conexos são colocados no novo subgrafo
                 for(size_t j = 0; j < vertices.size(); j++)
                     if(direct[j] != -1 && indirect[j] != -1)
                         graph.addVertex(getVertex(j));
 
+                // o novo subgrafo é add à lista de subgrafos
                 graphs.push_back(graph);
                 size_t gsizes = 0;
                 for(auto g : graphs) gsizes += g.vertices.size();
+                // se não existirem mais vértices sobrando o algoritmo para
                 if(gsizes == vertices.size()) break;
             }
         }
@@ -278,28 +277,74 @@ public:
 
     std::string dijkstra(Vertex* vertex){
         std::string data = "";
-        auto dist = std::vector<int>();
-        auto prev = std::vector<std::string>();
-        for(size_t i = 0; i < vertices.size(); i++){
+        size_t size = vertices.size();
+        auto dist = std::vector<size_t>(); // distância de cada nó partindo da fonte
+        auto isClosed = std::vector<bool>(); // vetor de fechados
+        auto matrix = getAdjMatrix(); // matriz de adjacência do grafo
+
+        // inicializa vetores
+        for(size_t i = 0; i < size; i++){
             if(vertex->id == vertices[i]->id){
                 dist.push_back(0);
             }else{
-                dist.push_back(-1);
+                dist.push_back(INFINITY);
             }
-            prev.push_back("");
+            isClosed.push_back(false);
         }
 
+        // encontra o caminho de menor custo para todos os vértices
+        for (size_t i = 0; i < size - 1; i++) {
+            // pega a menor distância entre os vértices que ainda não foram fechados
+            size_t min = INFINITY;
+            size_t u;
+            for (size_t v = 0; v < vertices.size(); v++){
+                if (!isClosed[v] && dist[v] <= min){
+                    min = dist[v];
+                    u = v;
+                }
+            }
+            // fecha o vértice
+            isClosed[u] = true;
 
+            for (size_t v = 0; v < size; v++){
+                /*  dist[v] só é atualizado se:
+                 *    ainda não foi fechado,
+                 *    se tiver uma aresta entre u e v,
+                 *    e o peso total do caminho partindo do vértice fonte para v
+                 *    passando por u é menor que o valor atual de dist[v]
+                 */
+                if (!isClosed[v] && matrix[u][v] && dist[u] != INFINITY && dist[u] + matrix[u][v] < dist[v]){
+                    // se todas as condições forem satisfeitas, a distância é atializada
+                    dist[v] = dist[u] + matrix[u][v];
+                }
+            }
+        }
+
+        // concatena o resultado
+        data = "Vértice        Menor dist.                     '\n";
+        for (size_t i = 0; i < size; i++) {
+            data += vertices[i]->id + "                  ";
+            if(dist[i] == INFINITY){
+                data += "*                      ";
+            }else{
+                data += std::to_string(dist[i]) + "\n";
+            }
+        }
 
         return data;
     }
 
-    // ---------------- HERIKC ↓
+
+
+
+
+
+    // ---------------- HERIKC ↓ ------------------------------------------------------------------//
 
     // Verifica se os vertice v1 � vizinho de v2, respeitando as dire��eos
     bool isNeighborhood(Vertex* v1, Vertex* v2) {
         for (size_t i = 0; i < v1->adjacencies.size(); i++)
-            if (v1->adjacencies[i]->id == v2->id)
+            if (v1->adjacencies[i].adjacency->id == v2->id)
                 return true;
         return false;
     }
@@ -366,7 +411,7 @@ public:
                        "i" = posi��o atual na lista de adjacencias
                        "j" = posi��o atual na lista de vertices
                     */
-                    if(newI->adjacencies[i]->id._Equal(vertices[j]->id)) {
+                    if(newI->adjacencies[i].adjacency->id._Equal(vertices[j]->id)) {
                         if (!visited[j]) {
                             newV = vertices[j];
                             find = true;
@@ -428,7 +473,7 @@ public:
             for (size_t i = 0; i < newI->adjacencies.size(); i++) {
                 for (size_t j = 0; j < vector_size; j++) {
 
-                    if (newI->adjacencies[i]->id._Equal(vertices[j]->id))
+                    if (newI->adjacencies[i].adjacency->id._Equal(vertices[j]->id))
                     {
                         if (!visitados[j]) {
                             /*
