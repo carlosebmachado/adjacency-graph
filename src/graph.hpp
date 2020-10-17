@@ -472,10 +472,6 @@ public:
 
             for (size_t i = 0; i < vector_size; i++) {
                 for (size_t j = 0; j < newI->adjacencies.size(); j++) {
-
-                    std::string tempIdNewI = newI->adjacencies[j].adjacency->id;
-                    std::string tempIdVerticeI = vertices[i]->id;
-
                     if (newI->adjacencies[j].adjacency->id._Equal(vertices[i]->id))
                     {
                         if (!visitados[i]) {
@@ -483,8 +479,6 @@ public:
                                 Marca o vertice atual da lista de ajcacencia como visitado
                                 Realizando atualiza��o de queue e vetor de visitados
                             */
-                            tempIdNewI = newI->adjacencies[j].adjacency->id;
-                            tempIdVerticeI = vertices[i]->id;
                             cstr += visiting(visitados, queue, vertices[i]);
                         }
                     }
