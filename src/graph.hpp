@@ -404,16 +404,16 @@ public:
             Vertex* newV = nullptr;
             bool find = false;
 
-            for(size_t i = 0; i < newI->adjacencies.size(); i++){
-                for (size_t j = 0; j < vector_size; j++) {
+            for(size_t i = 0; i < vector_size; i++){
+                for (size_t j = 0; j < newI->adjacencies.size(); j++) {
                     /*
                        Procura na lista de adjacencias do vertice atual o vertice correspodente
                        "i" = posi��o atual na lista de adjacencias
                        "j" = posi��o atual na lista de vertices
                     */
-                    if(newI->adjacencies[i].adjacency->id._Equal(vertices[j]->id)) {
-                        if (!visited[j]) {
-                            newV = vertices[j];
+                    if(newI->adjacencies[j].adjacency->id._Equal(vertices[i]->id)) {
+                        if (!visited[i]) {
+                            newV = vertices[i];
                             find = true;
                             break;
                         }
@@ -470,17 +470,22 @@ public:
         while (true) {
             Vertex* newI = getVertex(vertex->id);
 
-            for (size_t i = 0; i < newI->adjacencies.size(); i++) {
-                for (size_t j = 0; j < vector_size; j++) {
+            for (size_t i = 0; i < vector_size; i++) {
+                for (size_t j = 0; j < newI->adjacencies.size(); j++) {
 
-                    if (newI->adjacencies[i].adjacency->id._Equal(vertices[j]->id))
+                    std::string tempIdNewI = newI->adjacencies[j].adjacency->id;
+                    std::string tempIdVerticeI = vertices[i]->id;
+
+                    if (newI->adjacencies[j].adjacency->id._Equal(vertices[i]->id))
                     {
-                        if (!visitados[j]) {
+                        if (!visitados[i]) {
                             /*
                                 Marca o vertice atual da lista de ajcacencia como visitado
                                 Realizando atualiza��o de queue e vetor de visitados
                             */
-                            cstr += visiting(visitados, queue, vertices[j]);
+                            tempIdNewI = newI->adjacencies[j].adjacency->id;
+                            tempIdVerticeI = vertices[i]->id;
+                            cstr += visiting(visitados, queue, vertices[i]);
                         }
                     }
 

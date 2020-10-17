@@ -2,7 +2,6 @@
 
 <section>
     <name>"test_1.bps"</>
-    <data>vertices:"a,b,c,d,e,f,g,h,i"</>
-    <data>edges:"a,e,1/a,f,1/b,g,1/c,h,1/e,i,1/f,i,1/f,e,1/g,a,1/h,d,1/i,a,1"</>
+    <data>vertices:"a,b,c,d,e,f,g,h,i"</>	 <data>edges:"a,f,1/a,e,1/a,g,1/a,i,1/b,g,1/c,h,1/d,h,1/e,i,1/e,a,1/e,f,1/f,i,1/f,e,1/f,a,1/g,a,1/g,b,1/h,d,1/h,c,1/i,a,1/i,f,1/i,e,1"</>
 </>
 
