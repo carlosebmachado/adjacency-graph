@@ -307,14 +307,15 @@ public:
             isClosed[u] = true;
 
             for (size_t v = 0; v < size; v++){
-                /*  dist[v] só é atualizado se:
+                /*
+                 *  dist[v] só é atualizado se:
                  *    ainda não foi fechado,
                  *    se tiver uma aresta entre u e v,
                  *    e o peso total do caminho partindo do vértice fonte para v
                  *    passando por u é menor que o valor atual de dist[v]
                  */
                 if (!isClosed[v] && matrix[u][v] && dist[u] != INFINITY && dist[u] + matrix[u][v] < dist[v]){
-                    // se todas as condições forem satisfeitas, a distância é atializada
+                    // se todas as condições forem satisfeitas, a distância é atualizada
                     dist[v] = dist[u] + matrix[u][v];
                 }
             }
@@ -325,7 +326,7 @@ public:
         for (size_t i = 0; i < size; i++) {
             data += vertices[i]->id + "                  ";
             if(dist[i] == INFINITY){
-                data += "*                      ";
+                data += "*\n";
             }else{
                 data += std::to_string(dist[i]) + "\n";
             }
