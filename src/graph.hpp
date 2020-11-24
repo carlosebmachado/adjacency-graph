@@ -48,6 +48,39 @@ public:
     }
 };
 
+class CriticVertex : public Vertex {
+public:
+
+    int minGoing;
+    int maxGoign;
+    int minBack;
+    int maxBack;
+
+    int duration;
+    int dayOff;
+
+    CriticVertex(std::string id, int x, int y, int minGoing, int maxGoing, int minBack, int maxBack, int duration, int dayOff):Vertex(x, y, id) {
+        this->minGoing = minGoing;
+        this->maxGoign = maxGoign;
+        this->minBack = minBack;
+        this->maxBack = maxBack;
+        
+        this->duration = duration;
+        this->dayOff = dayOff;   
+    }
+
+    CriticVertex(std::string id, int minGoing, int maxGoing, int minBack, int maxBack, int duration, int dayOff):Vertex(id) {
+        this->minGoing = minGoing;
+        this->maxGoign = maxGoign;
+        this->minBack = minBack;
+        this->maxBack = maxBack;
+        
+        this->duration = duration;
+        this->dayOff = dayOff;   
+    }
+
+}
+
 class Graph {
 public:
     std::string text;
@@ -674,6 +707,21 @@ public:
         else
             return true;
 
+    }
+  
+    // Retorna Grafo com a Estrutura de Caminho Critico
+    static Graph criticalPathGraph(std::vector<std::string> activity, std::vector<int> duration, std::vector<std::string> previous) {
+
+        return this;
+    }
+
+
+    // Retorna Caminho Critico do Grafo
+    static std::vector<std::string> criticalPath(Graph graph) {
+        std::vector<std::string> critical = std::vector<std::string>();
+        crtical.add("Atividade 1")
+
+        return critical;
     }
 
 };
