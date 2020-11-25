@@ -52,16 +52,16 @@ class CriticVertex : public Vertex {
 public:
 
     int minGoing;
-    int maxGoign;
+    int maxGoing;
     int minBack;
     int maxBack;
 
     int duration;
     int dayOff;
 
-    CriticVertex(std::string id, int x, int y, int minGoing, int maxGoing, int minBack, int maxBack, int duration, int dayOff):Vertex(x, y, id) {
+    CriticVertex(std::string id, int x, int y, int minGoing, int maxGoing, int minBack, int maxBack, int duration, int dayOff) : Vertex(x, y, id) {
         this->minGoing = minGoing;
-        this->maxGoign = maxGoign;
+        this->maxGoing = maxGoing;
         this->minBack = minBack;
         this->maxBack = maxBack;
         
@@ -69,9 +69,9 @@ public:
         this->dayOff = dayOff;   
     }
 
-    CriticVertex(std::string id, int minGoing, int maxGoing, int minBack, int maxBack, int duration, int dayOff):Vertex(id) {
+    CriticVertex(std::string id, int minGoing, int maxGoing, int minBack, int maxBack, int duration, int dayOff) : Vertex(id) {
         this->minGoing = minGoing;
-        this->maxGoign = maxGoign;
+        this->maxGoing = maxGoing;
         this->minBack = minBack;
         this->maxBack = maxBack;
         
@@ -79,7 +79,7 @@ public:
         this->dayOff = dayOff;   
     }
 
-}
+};
 
 class Graph {
 public:
@@ -312,6 +312,7 @@ public:
         std::string data = "";
         size_t size = vertices.size();
         auto dist = std::vector<size_t>(); // distância de cada nó partindo da fonte
+        auto prev = std::vector<std::string>(); // distância de cada nó partindo da fonte
         auto isClosed = std::vector<bool>(); // vetor de fechados
         auto matrix = getAdjMatrix(); // matriz de adjacência do grafo
 
@@ -322,6 +323,7 @@ public:
             }else{
                 dist.push_back(INFINITY);
             }
+            prev.push_back("");
             isClosed.push_back(false);
         }
 
@@ -349,20 +351,22 @@ public:
                  */
                 if (!isClosed[v] && matrix[u][v] && dist[u] != INFINITY && dist[u] + matrix[u][v] < dist[v]){
                     // se todas as condições forem satisfeitas, a distância é atualizada
+                    prev[v] = vertices[u]->id;
                     dist[v] = dist[u] + matrix[u][v];
                 }
             }
         }
 
         // concatena o resultado
-        data = "Vértice        Menor dist.                     '\n";
+        data = "Vértice\t\tMenor dist.\tPrecedente\n";
         for (size_t i = 0; i < size; i++) {
-            data += vertices[i]->id + "                  ";
+            data += vertices[i]->id + "\t\t";
             if(dist[i] == INFINITY){
-                data += "*\n";
+                data += "*\t\t";
             }else{
-                data += std::to_string(dist[i]) + "\n";
+                data += std::to_string(dist[i]) + "\t\t";
             }
+            data += prev[i] + "\n";
         }
 
         return data;
@@ -693,34 +697,28 @@ public:
         int* direct = directTransitiveClosure(vertices[0]);
         int* indirect = indirectTransitiveClosure(vertices[0]);
 
-        int counterDirect = 0;
-        int counterIndirect = 0;
         for (size_t i = 0; i < vertices.size(); i++) {
-            if (direct[i] == (-1))
-                counterDirect++;
-            if (indirect[i] == (-1))
-                counterIndirect++;
+            if (direct[i] != indirect[i])
+                return false;
         }
-
-        if (counterDirect != counterIndirect)
-            return false;
-        else
-            return true;
-
+        return true;
     }
   
     // Retorna Grafo com a Estrutura de Caminho Critico
     static Graph criticalPathGraph(std::vector<std::string> activity, std::vector<int> duration, std::vector<std::string> previous) {
 
-        return this;
+        return Graph();
     }
 
 
     // Retorna Caminho Critico do Grafo
     static std::vector<std::string> criticalPath(Graph graph) {
-        std::vector<std::string> critical = std::vector<std::string>();
-        crtical.add("Atividade 1")
+        auto critical = std::vector<std::string>();
+        critical.push_back("Início");
 
+        // TODO: Adicionar o caminho crítico entre o início e fim
+
+        critical.push_back("Início");
         return critical;
     }
 
