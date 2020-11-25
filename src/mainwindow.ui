@@ -242,7 +242,14 @@
     <addaction name="actionShowHelp"/>
     <addaction name="actionAboutQT"/>
    </widget>
+   <widget class="QMenu" name="menuFerramentas">
+    <property name="title">
+     <string>Ferramentas</string>
+    </property>
+    <addaction name="actionCritiPath"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuFerramentas"/>
    <addaction name="menuAjuda"/>
   </widget>
   <action name="actionNew">
@@ -281,6 +288,11 @@
   <action name="actionAboutQT">
    <property name="text">
     <string>Sobre o QT</string>
+   </property>
+  </action>
+  <action name="actionCritiPath">
+   <property name="text">
+    <string>Caminho crítico</string>
    </property>
   </action>
  </widget>

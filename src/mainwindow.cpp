@@ -1,3 +1,4 @@
+#include "criticpathform.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -109,4 +110,10 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionAboutQT_triggered()
 {
     QMessageBox::aboutQt(this, "Sobre o QT");
+}
+
+void MainWindow::on_actionCritiPath_triggered()
+{
+    auto cpf = new CriticPathForm();
+    cpf->show();
 }

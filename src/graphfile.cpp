@@ -180,8 +180,6 @@ void GraphFile::on_btnVector_clicked()
 
 void GraphFile::on_btnCriticPath_clicked()
 {
-    auto cpf = new CriticPathForm();
-    cpf->show();
 }
 
 

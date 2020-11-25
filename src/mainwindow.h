@@ -39,6 +39,8 @@ private slots:
 
     void on_actionAboutQT_triggered();
 
+    void on_actionCritiPath_triggered();
+
 private:
     Ui::MainWindow *ui;
 };
