@@ -1,3 +1,4 @@
+#include "criticpathform.h"
 #include "graphfile.h"
 #include "ui_graphfile.h"
 
@@ -175,6 +176,12 @@ void GraphFile::on_btnConnected_clicked()
 void GraphFile::on_btnVector_clicked()
 {
     QMessageBox::information(this, "Vetor de adjacência", graph.getStrAdjVector().c_str());
+}
+
+void GraphFile::on_btnCriticPath_clicked()
+{
+    auto cpf = new CriticPathForm();
+    cpf->show();
 }
 
 

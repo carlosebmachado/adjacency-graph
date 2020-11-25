@@ -49,6 +49,8 @@ private slots:
 
     void on_btnVector_clicked();
 
+    void on_btnCriticPath_clicked();
+
 private:
     Ui::GraphFile *ui;
 };

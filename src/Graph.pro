@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     BPS.cpp \
+    criticpathform.cpp \
     graphfile.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -24,12 +25,14 @@ SOURCES += \
 
 HEADERS += \
     BPS.hpp \
+    criticpathform.h \
     graph.hpp \
     graphfile.h \
     mainwindow.h \
     util.hpp
 
 FORMS += \
+    criticpathform.ui \
     graphfile.ui \
     mainwindow.ui
 
