@@ -79,6 +79,16 @@ public:
         this->dayOff = dayOff;   
     }
 
+    CriticVertex(std::string id, int duration) : Vertex(id) {
+        this->minGoing = 0;
+        this->maxGoing = 0;
+        this->minBack = 0;
+        this->maxBack = 0;
+
+        this->duration = duration;
+        this->dayOff = 0;
+    }
+
 };
 
 class Graph {
@@ -705,9 +715,34 @@ public:
     }
   
     // Retorna Grafo com a Estrutura de Caminho Critico
-    static Graph criticalPathGraph(std::vector<std::string> activity, std::vector<int> duration, std::vector<std::string> previous) {
+    static Graph* criticalPathGraph(std::vector<std::string> activity, std::vector<int> duration, std::vector<std::string> previous) {
+        size_t vector_size = activity.size();
+        bool* visited = new bool[vector_size];
 
-        return Graph();
+        for (size_t i = 0; i < vector_size; i++)
+            visited[i] = false;
+
+
+        auto vertex = std::vector<Vertex*>();
+
+        for(int i = 0; i < activity.size(); i++)
+            vertex.push_back(new CriticVertex(activity[i], duration[i]));
+
+        Graph* critical = new Graph("Critical", vertex);
+
+        for(int i = 0; i < activity.size(); i++) {
+            for(int j = 0; j < previous.size(); j++) {
+                if(activity[i]._Equal(previous[j])){
+                    critical->addEdge(activity[i], activity[j], 0);
+                }
+            }
+        }
+
+        for(int i = 0; i < critical->vertices.size(); i++){
+            if(critical->vertices[i])
+        }
+
+        return critical;
     }
 
 
