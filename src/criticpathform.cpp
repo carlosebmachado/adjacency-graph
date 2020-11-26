@@ -1,6 +1,7 @@
 #include "criticpathform.h"
 #include "ui_criticpathform.h"
 #include "graph.hpp"
+#include "cpdatashow.h"
 
 CriticPathForm::CriticPathForm(QWidget *parent) :
     QMainWindow(parent),
@@ -8,11 +9,7 @@ CriticPathForm::CriticPathForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    auto headerTitles = QStringList();
-    headerTitles.append("Atividade");
-    headerTitles.append("Duração");
-    headerTitles.append("Precedente");
-    ui->tableWidget->setHorizontalHeaderLabels(headerTitles);
+    ui->tableWidget->setHorizontalHeaderLabels(QStringList() << tr("Atividade") << tr("Duração") << tr("Precedente"));
 }
 
 CriticPathForm::~CriticPathForm()
@@ -23,6 +20,11 @@ CriticPathForm::~CriticPathForm()
 void CriticPathForm::on_btnAddRow_clicked()
 {
     ui->tableWidget->insertRow(ui->tableWidget->rowCount());
+}
+
+void CriticPathForm::on_btnRemoveRow_clicked()
+{
+    ui->tableWidget->removeRow(ui->tableWidget->rowCount() - 1);
 }
 
 void CriticPathForm::on_btnConfirm_clicked()
@@ -39,5 +41,16 @@ void CriticPathForm::on_btnConfirm_clicked()
     auto graph = Graph::criticalPathGraph(activities, durations, previous);
     auto criticalPath = Graph::criticalPath(graph);
 
-    // TODO: Mostrar dados...
+//    graph = Graph("teste");
+//    criticalPath = std::vector<std::string>();
+//    criticalPath.push_back("Início");
+//    for(int i = 0; i < 9; i++){
+//        graph.addVertex(new CriticVertex("tarefa " + std::to_string(i), 0, 0, 0, 0, 0, 0));
+//        criticalPath.push_back("tarefa " + std::to_string(i));
+//    }
+//    criticalPath.push_back("Fim");
+
+    auto dataForm = new CPDataShow();
+    dataForm->addData(graph, criticalPath);
+    dataForm->show();
 }
