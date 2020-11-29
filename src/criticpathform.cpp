@@ -35,9 +35,10 @@ void CriticPathForm::on_btnConfirm_clicked()
         activities.push_back(ui->tableWidget->model()->index(i, 0).data().toString().toStdString());
         durations.push_back(ui->tableWidget->model()->index(i, 1).data().toInt());
         previous.push_back(ui->tableWidget->model()->index(i, 2).data().toString().toStdString());
+        //std::cout << ui->tableWidget->model()->index(i, 2).data().toString().toStdString();
     }
     auto graph = Graph::criticalPathGraph(activities, durations, previous);
-    auto criticalPath = Graph::criticalPath(graph);
+    //auto criticalPath = Graph::criticalPath(graph);
 
     // TODO: Mostrar dados...
 }
