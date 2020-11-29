@@ -20,6 +20,8 @@ private slots:
 
     void on_btnConfirm_clicked();
 
+    void on_btnRemoveRow_clicked();
+
 private:
     Ui::CriticPathForm *ui;
 };
