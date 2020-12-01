@@ -81,23 +81,23 @@ public:
     }
 
     CriticVertex(std::string id, int duration) : Vertex(id) {
-        this->minGoing = 0;
-        this->maxGoing = 0;
-        this->minBack = 0;
-        this->maxBack = 0;
+        this->minGoing = -1;
+        this->maxGoing = -1;
+        this->minBack = -1;
+        this->maxBack = -1;
 
         this->duration = duration;
-        this->dayOff = 0;
+        this->dayOff = -1;
     }
 
     CriticVertex(std::string id) : Vertex(id) {
-        this->minGoing = 0;
-        this->maxGoing = 0;
-        this->minBack = 0;
-        this->maxBack = 0;
+        this->minGoing = -1;
+        this->maxGoing = -1;
+        this->minBack = -1;
+        this->maxBack = -1;
 
-        this->duration = 0;
-        this->dayOff = 0;
+        this->duration = -1;
+        this->dayOff = -1;
     }
 
 };
@@ -726,7 +726,7 @@ public:
     }
   
     // Retorna Grafo com a Estrutura de Caminho Critico
-    static Graph* criticalPathGraph(std::vector<std::string> activity, std::vector<int> duration, std::vector<std::string> previous) {
+    static Graph criticalPathGraph(std::vector<std::string> activity, std::vector<int> duration, std::vector<std::string> previous) {
         size_t vector_size = activity.size();
         bool* visited = new bool[vector_size];
         std::vector<std::vector<std::string>> previousPro;
@@ -737,7 +737,7 @@ public:
         // Cria o vetor de vertex do grafo adicionando a duração
         for (size_t i = 0; i < vector_size; i++) {
             visited[i] = false;
-            previousPro[i] = split(previous[i], ',');
+            previousPro.push_back(split(previous[i], ','));
             vertex.push_back(new CriticVertex(activity[i], duration[i]));
         }
 
@@ -749,9 +749,11 @@ public:
         Graph* critical = new Graph("Critical", vertex);
 
         // Adiciona as conexões de acordo com o vetor de previousPro
-        for(int i = 0; i < previousPro.size(); i++) {
-            for(int j = 0; j < previousPro[i].size(); j++){
-                critical->addEdge(previousPro[i][j], activity[i], 0);
+        for(size_t i = 0; i < previousPro.size(); i++) {
+            for(size_t j = 0; j < previousPro[i].size(); j++){
+                if(!previousPro[i][j]._Equal("")) {
+                    critical->addEdge(previousPro[i][j], activity[i], 0);
+                }
             }
         }
 
@@ -759,17 +761,22 @@ public:
         int maxEnd = -1;
         // Caminho de ida do caminho critico, faça enquanto todos os vertices não forem visitados
         do{
-            for(int i = 0; i < vector_size; i++){
+            for(size_t i = 0; i < vector_size; i++){
                 if(!visited[i]){ // Verifica se o vertice já foi visitado, para não realizar novamente
                     bool allPreviousVisited = true;
 
-                    // Viierifica se os seus precedentes já foram visitados, para não vistar na ordem errada
-                    for(int j = 0; j < previousPro[i].size(); j++){
-                        size_t index = critical->indexOfVertex(previousPro[i][j]);
+                    // Verifica se os seus precedentes já foram visitados, para não vistar na ordem errada
+                    for(size_t j = 0; j < previousPro[i].size(); j++){
+                        int index = critical->indexOfVertex(previousPro[i][j]);
 
-                        if(!visited[index] && index != (-1)){
-                            allPreviousVisited = false;
+                        if(previousPro[i][0]._Equal(""))
                             break;
+
+                        if(index != (-1)) {
+                            if(!visited[index]){
+                                allPreviousVisited = false;
+                                break;
+                            }
                         }
                     }
 
@@ -779,26 +786,26 @@ public:
                         auto curVertex = (CriticVertex*)critical->vertices[i];
 
                         // Caso seja o vertice inicial, não terá precedente
-                        if(previousPro[i].size() <= 0) {
+                        if(previousPro[i].size() <= 0 || previousPro[i][0]._Equal("")) {
                             curVertex->minGoing = 1;
                             curVertex->maxGoing = duration[i];
                         }else { // Para os demais vertices preenche o min e max de ida
                             int maxGoing = -1;
 
                             // Verifica qual o precedente de maior duração, para associar ao novo vertice
-                            for(int j = 0; j < previousPro[i].size(); j++){
-                                size_t index = critical->indexOfVertex(previousPro[i][j]);
+                            for(size_t j = 0; j < previousPro[i].size(); j++){
+                                int index = critical->indexOfVertex(previousPro[i][j]);
                                 auto curForVertex = (CriticVertex*)critical->vertices[index];
-                                if(curForVertex->duration > maxGoing){
-                                    maxGoing = curForVertex->duration;
-                                }
-                                if(curForVertex->duration > maxEnd){
-                                    maxEnd = curForVertex->duration;
+                                if(curForVertex->maxGoing > maxGoing){
+                                    maxGoing = curForVertex->maxGoing;
                                 }
                             }
-
                             curVertex->minGoing = maxGoing + 1;
                             curVertex->maxGoing = maxGoing + duration[i];
+                        }
+
+                        if(curVertex->maxGoing > maxEnd){
+                            maxEnd = curVertex->maxGoing;
                         }
                     }
                 }
@@ -806,7 +813,7 @@ public:
 
             // Verifica se todos vertices foram visitados no caminho de ida
             allVertexVisited = true;
-            for(int i = 0; i < vector_size; i++){
+            for(size_t i = 0; i < vector_size; i++){
                 if(!visited[i]){
                     allVertexVisited = false;
                     break;
@@ -829,7 +836,7 @@ public:
 
         // Caminho de volta do caminho critico, faça enquanto todos os vertices não forem visitados
         do{
-            for(int i = 0; i < vector_size; i++) {
+            for(size_t i = 0; i < vector_size; i++) {
                 // Verifica se o vertice já foi visitado, para não realizar novamente
                 if(!visited[i])
                 {
@@ -841,14 +848,14 @@ public:
                         auto curVertex = (CriticVertex*)critical->vertices[index];
                         curVertex->maxBack = maxEnd;
                         curVertex->minBack = maxEnd - duration[index] + 1;
-                        curVertex->dayOff = curVertex->maxBack - curVertex->minBack;
+                        curVertex->dayOff = curVertex->maxBack - curVertex->maxGoing;
                     }
                     else
                     {
                         bool adjacencyesVisited = true;
                         int maxBack = 999999;
 
-                        for(int j = 0; j < critical->vertices[i]->adjacencies.size(); j++){
+                        for(size_t j = 0; j < critical->vertices[i]->adjacencies.size(); j++){
                             size_t adjacencyIndex = critical->indexOfVertex(critical->vertices[i]->adjacencies[j].adjacency->id);
                             auto curAdjacencyVertex = (CriticVertex*)critical->vertices[adjacencyIndex];
 
@@ -870,14 +877,14 @@ public:
                             auto curVertex = (CriticVertex*)critical->vertices[index];
                             curVertex->maxBack = maxBack - 1;
                             curVertex->minBack = curVertex->maxBack - duration[index] + 1;
-                            curVertex->dayOff = curVertex->maxBack - curVertex->minBack;
+                            curVertex->dayOff = curVertex->maxBack - curVertex->maxGoing;
                         }
                     }
                 }
             }       
 
             allVertexVisited = true;
-            for(int i = 0; i < vector_size; i++) {
+            for(size_t i = 0; i < vector_size; i++) {
                 if(!visited[i])
                 {
                     allVertexVisited = false;
@@ -888,25 +895,50 @@ public:
 
 
         // Liga os vertices sem adjacentes ao vertice de FIM
-        for(int i = 0; i < vector_size; i++){
+        for(size_t i = 0; i < vector_size; i++){
             if(critical->vertices[i]->adjacencies.size() <= 0){
                 critical->addEdge(activity[i], vertexEnd, 0);
             }
         }
 
 
-        return critical;
+        return *critical;
     }
-
 
     // Retorna Caminho Critico do Grafo
     static std::vector<std::string> criticalPath(Graph graph) {
         auto critical = std::vector<std::string>();
         critical.push_back("Início");
 
-        // TODO: Adicionar o caminho crítico entre o início e fim
+        size_t vector_size = graph.vertices.size();
 
-        critical.push_back("Início");
+        auto curVertex = (CriticVertex*)graph.vertices[0];
+        for(size_t i = 0; i < vector_size; i++){
+
+            if(curVertex->dayOff == 0) {
+                critical.push_back(curVertex->id);
+
+                bool findedNewZeroDayOff = false;
+                for(size_t j = 0; j < curVertex->adjacencies.size(); j++) {
+                    auto adjacencyVertex = (CriticVertex*)curVertex->adjacencies[j].adjacency;
+
+                    if(adjacencyVertex->dayOff == 0){
+                        curVertex = adjacencyVertex;
+                        findedNewZeroDayOff = true;
+                        break;
+                    }
+                }
+
+                if(!findedNewZeroDayOff){
+                    break;
+                }
+            }
+            if(curVertex->dayOff == (-1) || curVertex->dayOff != 0)
+                break;
+        }
+
+        critical.push_back("Fim");
+
         return critical;
     }
 

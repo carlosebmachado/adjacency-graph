@@ -65,6 +65,8 @@ void CPDataShow::addData(Graph graph, std::vector<std::string> criticPath){
         curTable->setItem(2, 0, new QTableWidgetItem(std::to_string(curVertex->minBack).c_str()));
         // maxBack
         curTable->setItem(2, 1, new QTableWidgetItem(std::to_string(curVertex->maxBack).c_str()));
+        // dayOff
+        curTable->setItem(1, 2, new QTableWidgetItem(std::to_string(curVertex->dayOff).c_str()));
 
         QString appoints = "";
         auto aisize = curVertex->adjacencies.size();

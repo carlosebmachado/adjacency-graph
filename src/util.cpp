@@ -1,6 +1,6 @@
 #include "util.hpp"
 
-std::vector<std::string> split(std::string str, char sc)
+std::vector<std::string>    split(std::string str, char sc)
 {
     auto strings = std::vector<std::string>();
     std::string sstr = "";
