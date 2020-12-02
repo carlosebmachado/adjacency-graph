@@ -36,6 +36,9 @@ void CriticPathForm::on_btnConfirm_clicked()
     for(size_t i = 0; i < rowCount; i++){
         activities.push_back(ui->tableWidget->model()->index(i, 0).data().toString().toStdString());
         durations.push_back(ui->tableWidget->model()->index(i, 1).data().toInt());
+        //auto p = ui->tableWidget->model()->index(i, 2).data().toString().toStdString();
+        //if(p == "-") p = "";
+        //previous.push_back(p);
         previous.push_back(ui->tableWidget->model()->index(i, 2).data().toString().toStdString());
         //std::cout << ui->tableWidget->model()->index(i, 2).data().toString().toStdString();
     }
@@ -54,6 +57,6 @@ void CriticPathForm::on_btnConfirm_clicked()
 //    criticalPath.push_back("Fim");
 
     auto dataForm = new CPDataShow();
-    dataForm->addData(graph, criticalPath);
+    dataForm->addData(*graph, criticalPath);
     dataForm->show();
 }

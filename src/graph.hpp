@@ -906,7 +906,7 @@ public:
     }
 
     // Retorna Caminho Critico do Grafo
-    static std::vector<std::string> criticalPath(Graph graph) {
+    static std::vector<std::string> criticalPath(Graph* graph) {
         auto critical = std::vector<std::string>();
         critical.push_back("Início");
 
