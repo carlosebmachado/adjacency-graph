@@ -10,6 +10,37 @@ CriticPathForm::CriticPathForm(QWidget *parent) :
     ui->setupUi(this);
 
     ui->tableWidget->setHorizontalHeaderLabels(QStringList() << tr("Atividade") << tr("Duração") << tr("Precedente"));
+
+    // current table
+    auto curTable = ui->twExemple;
+//    curTable->setGeometry(0, 0, 225, 120);
+//    curTable->setMaximumSize(225, 120);
+//    curTable->setMinimumSize(225, 120);
+
+    // set rows and cols
+    curTable->setColumnCount(3);
+    curTable->setColumnWidth(0, 78);
+    curTable->setColumnWidth(1, 78);
+    curTable->setColumnWidth(2, 80);
+    curTable->setRowCount(3);
+
+    // set data
+    // activity
+    curTable->setItem(0, 0, new QTableWidgetItem("Atividade"));
+    // duration time
+    curTable->setItem(0, 1, new QTableWidgetItem("Duração"));
+    // minGoing
+    curTable->setItem(1, 0, new QTableWidgetItem("Mín chegada"));
+    // maxGoing
+    curTable->setItem(1, 1, new QTableWidgetItem("Max chegada"));
+    // minBack
+    curTable->setItem(2, 0, new QTableWidgetItem("Mín volta"));
+    // maxBack
+    curTable->setItem(2, 1, new QTableWidgetItem("Max volta"));
+    // appoints
+    curTable->setItem(0, 2, new QTableWidgetItem("Apontamentos"));
+    // dayOff
+    curTable->setItem(1, 2, new QTableWidgetItem("Folga"));
 }
 
 CriticPathForm::~CriticPathForm()
@@ -57,6 +88,6 @@ void CriticPathForm::on_btnConfirm_clicked()
 //    criticalPath.push_back("Fim");
 
     auto dataForm = new CPDataShow();
-    dataForm->addData(*graph, criticalPath);
+    dataForm->addData(graph, criticalPath);
     dataForm->show();
 }

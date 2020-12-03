@@ -906,13 +906,20 @@ public:
     }
 
     // Retorna Caminho Critico do Grafo
-    static std::vector<std::string> criticalPath(Graph* graph) {
+    static std::vector<std::string> criticalPath(Graph graph) {
         auto critical = std::vector<std::string>();
         critical.push_back("Início");
 
         size_t vector_size = graph.vertices.size();
 
-        auto curVertex = (CriticVertex*)graph.vertices[0];
+        CriticVertex* curVertex;
+        for(size_t i = 0; i < vector_size; i++){
+            if(((CriticVertex*)graph.vertices[i])->dayOff == 0){
+                curVertex = (CriticVertex*)graph.vertices[i];
+                break;
+            }
+        }
+
         for(size_t i = 0; i < vector_size; i++){
 
             if(curVertex->dayOff == 0) {

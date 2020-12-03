@@ -30,9 +30,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>40</y>
-      <width>621</width>
-      <height>311</height>
+      <y>10</y>
+      <width>361</width>
+      <height>341</height>
      </rect>
     </property>
     <property name="rowCount">
@@ -46,44 +46,80 @@
     <column/>
     <column/>
    </widget>
-   <widget class="QPushButton" name="btnAddRow">
+   <widget class="QTableWidget" name="twExemple">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>80</width>
-      <height>21</height>
+      <x>380</x>
+      <y>160</y>
+      <width>256</width>
+      <height>192</height>
      </rect>
-    </property>
-    <property name="text">
-     <string>Adicionar Linha</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnConfirm">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>10</y>
-      <width>80</width>
-      <height>21</height>
+      <x>380</x>
+      <y>140</y>
+      <width>251</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Confirmar</string>
+     <string>Exemplo da saída de dados:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnRemoveRow">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>380</x>
       <y>10</y>
-      <width>80</width>
-      <height>21</height>
+      <width>251</width>
+      <height>121</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Remover Linha</string>
+    <property name="title">
+     <string>Controles</string>
     </property>
+    <widget class="QPushButton" name="btnRemoveRow">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>30</y>
+       <width>80</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Remover Linha</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnAddRow">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>80</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Adicionar Linha</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnConfirm">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>90</y>
+       <width>80</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Confirmar</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>

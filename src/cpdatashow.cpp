@@ -10,6 +10,7 @@ CPDataShow::CPDataShow(QWidget *parent) :
     ui(new Ui::CPDataShow)
 {
     ui->setupUi(this);
+    setGeometry(geometry().x(), geometry().y(), 100, 100);
 }
 
 CPDataShow::~CPDataShow()
@@ -49,7 +50,7 @@ void CPDataShow::addData(Graph graph, std::vector<std::string> criticPath){
         curTable->setRowCount(3);
 
         // set header titles
-        curTable->setHorizontalHeaderLabels(QStringList() << tr("Atividade") << tr("Duração") << tr("Apontamentos"));
+        //curTable->setHorizontalHeaderLabels(QStringList() << tr("Atividade") << tr("Duração") << tr("Apontamentos"));
 
         // set data
         auto curVertex = (CriticVertex*)graph.vertices[i];
@@ -72,7 +73,7 @@ void CPDataShow::addData(Graph graph, std::vector<std::string> criticPath){
         auto aisize = curVertex->adjacencies.size();
         for(size_t ai = 0; ai < aisize; ai++){
             appoints += curVertex->adjacencies[ai].adjacency->id.c_str();
-            if(i < (aisize - 1)){
+            if(ai < (aisize - 1)){
                 appoints += ", ";
             }
         }
