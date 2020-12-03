@@ -800,10 +800,12 @@ public:
                                     maxGoing = curForVertex->maxGoing;
                                 }
                             }
+                            // Atribui ao vertice atual o minimo e maximo do caminho de ida
                             curVertex->minGoing = maxGoing + 1;
                             curVertex->maxGoing = maxGoing + duration[i];
                         }
 
+                        // Captura o valor maximo da ida para utilizar novamente na volta
                         if(curVertex->maxGoing > maxEnd){
                             maxEnd = curVertex->maxGoing;
                         }
@@ -840,9 +842,12 @@ public:
                 // Verifica se o vertice já foi visitado, para não realizar novamente
                 if(!visited[i])
                 {
-                    // Primeiramente deve ser visitado somente os Vertices de Fim
+                    // Visita os vertices e verifica se esse é um vertice de fim
+                    // Vertice de Fim: Todo vertice que não possui adjacentes
                     if(critical->vertices[i]->adjacencies.size() <= 0)
                     {
+                        // Marca o vertice como visitado e já atribui os seus valores maximo e minimo de volta,
+                        // juntamente com a folga. Os valores são baseados no valor maximo encontrado na ida
                         visited[i] = true;
                         size_t index = critical->indexOfVertex(critical->vertices[i]->id);
                         auto curVertex = (CriticVertex*)critical->vertices[index];
@@ -855,6 +860,7 @@ public:
                         bool adjacencyesVisited = true;
                         int maxBack = 999999;
 
+                        // Caso o vertice não seja final é necessário verificar se os seus adjacentes já foram visitados
                         for(size_t j = 0; j < critical->vertices[i]->adjacencies.size(); j++){
                             size_t adjacencyIndex = critical->indexOfVertex(critical->vertices[i]->adjacencies[j].adjacency->id);
                             auto curAdjacencyVertex = (CriticVertex*)critical->vertices[adjacencyIndex];
@@ -870,6 +876,7 @@ public:
                             }
                         }
 
+                        // Caso todos os vertices adjacentes tenham sido visitados realiza o procedimento
                         if(adjacencyesVisited)
                         {
                             visited[i] = true;
@@ -883,6 +890,7 @@ public:
                 }
             }       
 
+            // Verifica se todos os vertices foram visitados na volta
             allVertexVisited = true;
             for(size_t i = 0; i < vector_size; i++) {
                 if(!visited[i])
@@ -894,7 +902,7 @@ public:
         }while(!allVertexVisited);
 
 
-        // Liga os vertices sem adjacentes ao vertice de FIM
+        // Liga os vertices sem adjacentes (vertices finais) ao vertice de FIM
         for(size_t i = 0; i < vector_size; i++){
             if(critical->vertices[i]->adjacencies.size() <= 0){
                 critical->addEdge(activity[i], vertexEnd, 0);
@@ -912,6 +920,7 @@ public:
 
         size_t vector_size = graph.vertices.size();
 
+        // Procura o vertice inicial que possua folga igual a zero
         CriticVertex* curVertex;
         for(size_t i = 0; i < vector_size; i++){
             if(((CriticVertex*)graph.vertices[i])->dayOff == 0){
@@ -920,12 +929,15 @@ public:
             }
         }
 
+        // Percorre os vertices apartir do vertice inicial, de acordo com as adjacencias
+        // Caso o vertice possua folga 0, adiciona a lista de vertices do caminho critico
         for(size_t i = 0; i < vector_size; i++){
 
             if(curVertex->dayOff == 0) {
                 critical.push_back(curVertex->id);
 
                 bool findedNewZeroDayOff = false;
+                // Verifica se os adjacentes do vertice possuem folga igual a zero
                 for(size_t j = 0; j < curVertex->adjacencies.size(); j++) {
                     auto adjacencyVertex = (CriticVertex*)curVertex->adjacencies[j].adjacency;
 
@@ -936,10 +948,12 @@ public:
                     }
                 }
 
+                // Caso não seja encontrato nenhum vertice significa que o processo foi encerrado
                 if(!findedNewZeroDayOff){
                     break;
                 }
             }
+
             if(curVertex->dayOff == (-1) || curVertex->dayOff != 0)
                 break;
         }
